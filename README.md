@@ -1,1 +1,4 @@
 # twitter-clone
+
+Dependencies:
+- jsonwebtoken
