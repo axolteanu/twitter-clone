@@ -13,16 +13,15 @@ let requestListener = async function(req, res) {
   if(req.method === 'GET'){
     let path = '.';
     if(req.url === '/'){
-      try{
-        let authToken = getCookie(req.headers.cookie, 'authToken');
-        let decoded = await security.validateToken(authToken);
-        console.log(`Auth token is valid for ${decoded.username}`)
-        path += '/home.html';
-        
-      }catch(err){
+      let authToken = getCookie(req.headers.cookie, 'authToken');
+      let ret = await security.validateToken(authToken);
+      if(ret.err){
         console.log("Can't validate auth token")
         path += '/index.html';
-        res.clearCookie('authToken');
+        //res.clearCookie('authToken');
+      }else{
+        console.log(`Auth token is valid for ${ret.decoded.username}`)
+        path += '/home.html';
       }
       res.setHeader('Content-Type', 'text/html');
     }
@@ -50,7 +49,7 @@ let requestListener = async function(req, res) {
     req.on('data', (chunk) => {
       data += chunk;
     });
-    req.on('end', () => {
+    req.on('end', async () => {
       let params = new URLSearchParams(data);
       let hash = security.createPasswordHash(params.get('password'));
       let dob = `${params.get('dob-year')}-${params.get('dob-month')}-${params.get('dob-day')}`;
@@ -61,16 +60,17 @@ let requestListener = async function(req, res) {
         '${params.get('email')}',
         '${dob}'
         )`;
-      try{
-        db.query(sql);
+      let err = await db.query(sql);
+      if(err){
+        console.log(err);
+        console.log("User was not saved"); 
+      }else{
         console.log("1 user saved");
         authToken = security.createAuthToken({username: params.get('email')});
         res.statusCode = 301;
         res.setHeader('Location', '/');
         res.setHeader('Set-Cookie', `authToken=${authToken}; Secure; HttpOnly`);
         res.end();
-      }catch(err){
-        console.log("User was not saved"); 
       }
     });
   }
@@ -78,7 +78,7 @@ let requestListener = async function(req, res) {
 
 async function startApp(){
   await setupDb();
-  await startWebServer();
+  startWebServer();
 }
 
 async function setupDb(){  
@@ -88,15 +88,16 @@ async function setupDb(){
     password: 'admin',
     database: 'twitterclonedb'
   })
-  try{
-    await db.connect();
-    console.log('Connected to DB');
-  }catch(err){
+  let err = await db.connect();
+  if(err){
+    console.log(err);
     console.log('Failed to connect to DB');
+  }else{
+    console.log('Connected to DB');
   }
 }
 
-async function startWebServer(){
+function startWebServer(){
   let port = 3000;
   let key = fs.readFileSync('./security/cert/localhost.key');
   let cert = fs.readFileSync('./security/cert/localhost.crt');
@@ -108,17 +109,21 @@ async function startWebServer(){
 
 function getCookie(headerCookie, cookieName){
   let cookies = [];
-  cookies = headerCookie.split[';'];
-  if(cookies === undefined){
-    cookies = [headerCookie];
-  }
-  for(let i = 0; i < cookies.length; i++){
-    let arr = cookies[i].split('=');
-    if(arr[0] === cookieName){
-      return arr[1];
+  if(headerCookie === undefined){
+    return '';
+  }else{
+    cookies = headerCookie.split[';'];
+    if(cookies === undefined){
+      cookies = [headerCookie];
     }
+    for(let i = 0; i < cookies.length; i++){
+      let arr = cookies[i].split('=');
+      if(arr[0] === cookieName){
+        return arr[1];
+      }
+    }
+    return '';
   }
-  return '';
 }
 
 startApp();

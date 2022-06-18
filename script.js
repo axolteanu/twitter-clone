@@ -40,7 +40,7 @@ initYears();
 // Months
 function initMonths(){
   let selectElem = document.getElementById('month-select');
-  addOption(selectElem, '', -1)
+  //addOption(selectElem, '', -1)
   addOption(selectElem, 'January', 1);
   addOption(selectElem, 'February', 2);
   addOption(selectElem, 'March', 3);
@@ -68,7 +68,7 @@ function initDays(year = -1, month = -1){
     month = (new Date()).getMonth() + 1;
   }
   let nDays = getNumberOfDays(year, month);
-  addOption(selectElem, '', -1);
+  //addOption(selectElem, '', -1);
   for(let i = 1; i <= nDays; i++){
     addOption(selectElem, i);
   }
@@ -79,7 +79,7 @@ function initYears(){
   let nYears = 120;
   let year = (new Date()).getFullYear();
   let selectElem = document.getElementById('year-select');
-  addOption(selectElem, '', -1);
+  //addOption(selectElem, '', -1);
   for(let i = 0; i <= nYears; i++, year--){
     addOption(selectElem, year);
   }

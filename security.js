@@ -20,10 +20,7 @@ module.exports = {
     return new Promise(resolve => {
       var cert = fs.readFileSync('./security/jwt.key.pub');
       jwt.verify(token, cert, function(err, decoded) {
-        if(err){
-          throw err;
-        }
-        resolve(decoded);
+        resolve({err, decoded});
       });
     });
   }

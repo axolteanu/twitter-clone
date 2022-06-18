@@ -10,12 +10,18 @@ Db.prototype.createConnection = function (info){
 
 Db.prototype.connect = function (){
   return new Promise(resolve => {
-    this.connection.connect(resolve);
+    this.connection.connect(err => {
+      resolve(err);
+    });
   });
 }
 
 Db.prototype.query = function (sql){
-  this.connection.query(sql);
+  return new Promise(resolve => {
+    this.connection.query(sql, err => {
+      resolve(err);
+    });
+  });
 }
 
 module.exports = Db;
