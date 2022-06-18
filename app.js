@@ -42,10 +42,8 @@ let requestListener = async function(req, res) {
         res.end();
       });
     }
-  }
-  else if(req.method === 'POST'){
+  }else if(req.method === 'POST'){
     let data = '';
-    let authToken = '';
     req.on('data', (chunk) => {
       data += chunk;
     });
@@ -66,7 +64,7 @@ let requestListener = async function(req, res) {
         console.log("User was not saved"); 
       }else{
         console.log("1 user saved");
-        authToken = security.createAuthToken({username: params.get('email')});
+        let authToken = security.createAuthToken({username: params.get('email')});
         res.statusCode = 301;
         res.setHeader('Location', '/');
         res.setHeader('Set-Cookie', `authToken=${authToken}; Secure; HttpOnly`);
@@ -76,9 +74,23 @@ let requestListener = async function(req, res) {
   }
 }
 
-async function startApp(){
-  await setupDb();
-  startWebServer();
+function getCookie(headerCookie, cookieName){
+  let cookies = [];
+  if(headerCookie === undefined){
+    return '';
+  }else{
+    cookies = headerCookie.split[';'];
+    if(cookies === undefined){
+      cookies = [headerCookie];
+    }
+    for(let i = 0; i < cookies.length; i++){
+      let arr = cookies[i].split('=');
+      if(arr[0] === cookieName){
+        return arr[1];
+      }
+    }
+    return '';
+  }
 }
 
 async function setupDb(){  
@@ -107,23 +119,9 @@ function startWebServer(){
   });
 }
 
-function getCookie(headerCookie, cookieName){
-  let cookies = [];
-  if(headerCookie === undefined){
-    return '';
-  }else{
-    cookies = headerCookie.split[';'];
-    if(cookies === undefined){
-      cookies = [headerCookie];
-    }
-    for(let i = 0; i < cookies.length; i++){
-      let arr = cookies[i].split('=');
-      if(arr[0] === cookieName){
-        return arr[1];
-      }
-    }
-    return '';
-  }
+async function main(){
+  await setupDb();
+  startWebServer();
 }
 
-startApp();
+main();
