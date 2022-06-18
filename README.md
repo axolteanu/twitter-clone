@@ -2,3 +2,4 @@
 
 Dependencies:
 - jsonwebtoken
+- mysql2

@@ -1,17 +1,29 @@
 let https = require('https');
 let fs = require('fs');
-let crypto = require('crypto');
+let security = require('./security.js');
+let Db = require('./db.js');
 
-let key = fs.readFileSync('./security/cert/localhost.key');
-let cert = fs.readFileSync('./security/cert/localhost.crt');
-
-https.createServer({key, cert},(req, res) => {
-  console.log(`Request: ${req.method}\t${req.url}`);
+let db = new Db();
+let requestListener = async function(req, res) {
+  console.log(
+    `[${(new Date()).toLocaleString('en-US', {timeZone: 'Canada/Central'})}]` + 
+    `Request: ${req.method}\t${req.url}`
+  );
   let statusCode = 200;
   if(req.method === 'GET'){
     let path = '.';
     if(req.url === '/'){
-      path += '/index.html';
+      try{
+        let authToken = getCookie(req.headers.cookie, 'authToken');
+        let decoded = await security.validateToken(authToken);
+        console.log(`Auth token is valid for ${decoded.username}`)
+        path += '/home.html';
+        
+      }catch(err){
+        console.log("Can't validate auth token")
+        path += '/index.html';
+        res.clearCookie('authToken');
+      }
       res.setHeader('Content-Type', 'text/html');
     }
     else{
@@ -34,22 +46,79 @@ https.createServer({key, cert},(req, res) => {
   }
   else if(req.method === 'POST'){
     let data = '';
+    let authToken = '';
     req.on('data', (chunk) => {
       data += chunk;
     });
     req.on('end', () => {
       let params = new URLSearchParams(data);
-      let hash = hashPassword(params.get('password')); 
-      console.log(hash.salt);
-      console.log(hash.hash);
-      res.writeHead(301, {'Location': '/'});
-      res.end();
+      let hash = security.createPasswordHash(params.get('password'));
+      let dob = `${params.get('dob-year')}-${params.get('dob-month')}-${params.get('dob-day')}`;
+      var sql = `insert into users (name, passHash, passSalt, email, dob) values (
+        '${params.get('name')}',
+        '${hash.hash}',
+        '${hash.salt}',
+        '${params.get('email')}',
+        '${dob}'
+        )`;
+      try{
+        db.query(sql);
+        console.log("1 user saved");
+        authToken = security.createAuthToken({username: params.get('email')});
+        res.statusCode = 301;
+        res.setHeader('Location', '/');
+        res.setHeader('Set-Cookie', `authToken=${authToken}; Secure; HttpOnly`);
+        res.end();
+      }catch(err){
+        console.log("User was not saved"); 
+      }
     });
   }
-}).listen(3000);
-
-function hashPassword(password){
-  this.salt = crypto.randomBytes(32).toString('hex');
-  this.hash = crypto.pbkdf2Sync(password, salt, 1000, 32, 'sha512').toString('hex');
-  return {salt: this.salt, hash: this.hash};
 }
+
+async function startApp(){
+  await setupDb();
+  await startWebServer();
+}
+
+async function setupDb(){  
+  db.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'admin',
+    database: 'twitterclonedb'
+  })
+  try{
+    await db.connect();
+    console.log('Connected to DB');
+  }catch(err){
+    console.log('Failed to connect to DB');
+  }
+}
+
+async function startWebServer(){
+  let port = 3000;
+  let key = fs.readFileSync('./security/cert/localhost.key');
+  let cert = fs.readFileSync('./security/cert/localhost.crt');
+
+  https.createServer({key, cert}, requestListener).listen(port, () => {
+    console.log(`Server running at https://localhost:${port}`);
+  });
+}
+
+function getCookie(headerCookie, cookieName){
+  let cookies = [];
+  cookies = headerCookie.split[';'];
+  if(cookies === undefined){
+    cookies = [headerCookie];
+  }
+  for(let i = 0; i < cookies.length; i++){
+    let arr = cookies[i].split('=');
+    if(arr[0] === cookieName){
+      return arr[1];
+    }
+  }
+  return '';
+}
+
+startApp();

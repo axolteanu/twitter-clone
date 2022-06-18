@@ -1,0 +1,3 @@
+- Create auth token on signup.
+- Add validation to signup form.
+- Set 'expires' of 'max-age' on authToken cookie.
