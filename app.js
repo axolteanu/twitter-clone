@@ -18,14 +18,18 @@ let requestListener = async function(req, res) {
       if(ret.err){
         console.log("Can't validate auth token")
         path += '/index.html';
-        //res.clearCookie('authToken');
       }else{
         console.log(`Auth token is valid for ${ret.decoded.username}`)
         path += '/home.html';
       }
       res.setHeader('Content-Type', 'text/html');
-    }
-    else{
+    }else if(req.url === '/logout'){
+      console.log('Logout');
+      res.setHeader('Set-Cookie', `authToken=; Max-Age=0`);
+      res.statusCode = 301;
+      res.setHeader('Location', '/');
+      res.end();
+    }else{
       if(req.url.match('.svg$')){
         res.setHeader('Content-Type', 'image/svg+xml')
       }
@@ -65,9 +69,10 @@ let requestListener = async function(req, res) {
       }else{
         console.log("1 user saved");
         let authToken = security.createAuthToken({username: params.get('email')});
-        res.statusCode = 301;
-        res.setHeader('Location', '/');
-        res.setHeader('Set-Cookie', `authToken=${authToken}; Secure; HttpOnly`);
+        res.writeHead(301,{
+          'Location': '/',
+          'Set-Cookie': `authToken=${authToken}; Max-Age=864000; Secure; HttpOnly`
+        });
         res.end();
       }
     });
@@ -75,16 +80,15 @@ let requestListener = async function(req, res) {
 }
 
 function getCookie(headerCookie, cookieName){
-  let cookies = [];
   if(headerCookie === undefined){
     return '';
   }else{
-    cookies = headerCookie.split[';'];
+    let cookies = headerCookie.split(';');
     if(cookies === undefined){
       cookies = [headerCookie];
     }
     for(let i = 0; i < cookies.length; i++){
-      let arr = cookies[i].split('=');
+      let arr = cookies[i].trim().split('=');
       if(arr[0] === cookieName){
         return arr[1];
       }
