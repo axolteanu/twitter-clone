@@ -11,26 +11,27 @@ let requestHandlers = {
 let handleHome = async (req, res) => {
   let path = './public';
   let authToken = getCookie(req.headers.cookie, 'authToken');
-  let ret = await security.validateToken(authToken);
-  if(ret.err){
-    console.log("Can't validate auth token")
-    path += '/index.html';
-  }else{
-    console.log(`Auth token is valid for ${ret.decoded.username}`)
-    path += '/home.html';
-  }
+  if(authToken != ''){
+    let ret = await security.validateToken(authToken);
+    if(ret.err){
+      console.log("Can't validate auth token")
+      path += '/index.html';
+    }else{
+      console.log(`Auth token is valid for ${ret.decoded.username}`)
+      path += '/home.html';
+    }
+  }else
+    path += 'index.html';
   res.setHeader('Content-Type', 'text/html');
   returnFile(path, res);
 }
 
 // GET static files
 let handleStatic = async (req, res) => {
-  let path = './public';
   if(req.url.match('.svg$')){
     res.setHeader('Content-Type', 'image/svg+xml')
   }
-  path += req.url;
-  returnFile(path, res);
+  returnFile(`./public${req.url}`, res);
 }
 
 // POST /signup
