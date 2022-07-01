@@ -1,0 +1,9 @@
+{
+  "dbConInfo": {
+    "host": "localhost",
+    "user": "root",
+    "password": "admin",
+    "database": "twitterclonedb"
+  },
+  "port": 3000
+}
