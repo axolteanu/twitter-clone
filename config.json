@@ -1,0 +1,27 @@
+{
+  "dbConInfo": {
+    "host": "localhost",
+    "user": "root",
+    "password": "admin",
+    "database": "twitterclonedb"
+  },
+  "port": 3000,
+  "mimes": {
+    "js": {
+      "mime": "text/javascript", 
+      "path": "./js"
+    },
+    "css": {
+      "mime": "text/css", 
+      "path": "./css"
+    },
+    "png": {
+      "mime": "image/png", 
+      "path": "./images"
+    },
+    "svg": {
+      "mime": "image/svg+xml", 
+      "path": "./images"
+    }
+  }
+}
