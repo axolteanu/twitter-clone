@@ -1,17 +1,14 @@
-const config = require('./src/config.js');
-const db = require('./src/db.js');
-const server = require('./src/server.js');
-
+const config = require('./config/config.js');
+const db = require('./db.js');
+const server = require('./server.js');
 
 let main = async function main(){
-  await config.loadConfigs();
-  await db.connect(config.getDbConInfo());
-  server.start(config.getPort());
+  await db.connect(config.dbConInfo);
+  server.start(config.port);
 }
 
 try{
   main();
 }catch(e){
-  // TODO log exception in a file
   console.log(e);
 }

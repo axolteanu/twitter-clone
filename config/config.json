@@ -6,22 +6,30 @@
     "database": "twitterclonedb"
   },
   "port": 3000,
-  "mimes": {
+  "mediaTypes": {
     "js": {
       "mime": "text/javascript", 
-      "path": "./js"
+      "path": "/js"
     },
     "css": {
       "mime": "text/css", 
-      "path": "./css"
+      "path": "/css"
     },
     "png": {
       "mime": "image/png", 
-      "path": "./images"
+      "path": "/images"
     },
     "svg": {
       "mime": "image/svg+xml", 
-      "path": "./images"
+      "path": "/images"
+    },
+    "html": {
+      "mime": "text/html",
+      "path": "/views"
+    },
+    "ico": {
+      "mime": "image/x-icon",
+      "path": "/images"
     }
   }
 }
