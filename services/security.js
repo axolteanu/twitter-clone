@@ -29,7 +29,7 @@ function createAuthToken(payload){
 
 async function authenticate(authToken){
   let payload = null;
-  if(authToken != ''){
+  if(authToken != undefined){
     try{
       payload = await validateAuthToken(authToken);
       isAuthenticated = true;

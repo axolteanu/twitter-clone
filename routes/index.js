@@ -1,9 +1,7 @@
 const fs = require('fs')
-const utils = require('../services/utils')
 
 module.exports.handle = async function (req, res) {
-  let authToken = utils.getCookie(req, 'authToken');
-  if(authToken != ''){
+  if(req.cookies.authToken != undefined){
     res.statusCode = 301;
     res.setHeader('Location', '/home');
     res.end();

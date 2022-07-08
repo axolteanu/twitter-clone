@@ -1,9 +1,9 @@
 const https = require("https");
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const fs = require('fs');
 const config = require("../config/config.js");
 const security = require("./security.js");
-const utils = require("./utils.js");
 const index = require("../routes/index.js");
 const home = require("../routes/home.js")
 const signup = require("../routes/signup.js");
@@ -13,6 +13,7 @@ const handler = express();
 
 handler.use(logger);
 handler.use(express.static('public'))
+handler.use(cookieParser());
 handler.get('/', index.handle);
 handler.post('/signup', signup.handle);
 handler.get('/home', authenticationHandler, home.handle);
@@ -20,10 +21,11 @@ handler.post('/logout', authenticationHandler, logout.handle);
 
 async function authenticationHandler(req, res, next){
   try{
-    let payload = await security.authenticate(utils.getCookie(req, 'authToken'));
+    let payload = await security.authenticate(req.cookies.authToken);
     req.username = payload.username;
     next();
   }catch(e){
+    res.setHeader('Set-Cookie', `authToken=; Max-Age=0`);
     res.statusCode = 301;
     res.setHeader('Location', '/');
     res.end();
@@ -33,7 +35,7 @@ async function authenticationHandler(req, res, next){
 
 function logger(req, res, next){
   let timestamp = (new Date()).toLocaleString('en-US', {timeZone: 'Canada/Central'});
-  console.log(`[${timestamp}] Request: ${req.method} ${req.url}`);
+  console.log(`[${timestamp}] ${req.method} ${req.url}`);
   next();
 }
 
