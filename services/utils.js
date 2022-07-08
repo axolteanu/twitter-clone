@@ -1,4 +1,5 @@
-function getCookie(headerCookie, cookieName){
+function getCookie(req, cookieName){
+  let headerCookie = req.headers.cookie;
   if(headerCookie === undefined){
     return '';
   }else{

@@ -31,5 +31,13 @@
       "mime": "image/x-icon",
       "path": "/images"
     }
+  },
+  "https": {
+    "keyPath": "./security/cert/localhost.key",
+    "certPath": "./security/cert/localhost.crt"
+  },
+  "jwt": {
+    "publicKeyPath": "./security/jwt.key.pub",
+    "privateKeyPath": "./security/jwt.key"
   }
 }

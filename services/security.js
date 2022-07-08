@@ -1,7 +1,7 @@
-let crypto = require('crypto');
-let jwt = require('jsonwebtoken');
-let fs = require('fs');
-let utils = require('../utils.js');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const config = require("../config/config.js")
 
 function createPasswordHash(password){
   let salt = crypto.randomBytes(32).toString('hex');
@@ -10,7 +10,7 @@ function createPasswordHash(password){
 }
 
 function createAuthToken(payload){
-  let privateKey = fs.readFileSync('./security/jwt.key');
+  let privateKey = fs.readFileSync(config.jwt.privateKeyPath);
   let token = jwt.sign(
     payload,
     privateKey,
@@ -20,7 +20,7 @@ function createAuthToken(payload){
 
  function validateAuthToken(token){
   return new Promise(resolve => {
-    var cert = fs.readFileSync('./security/jwt.key.pub');
+    var cert = fs.readFileSync(config.jwt.publicKeyPath);
     jwt.verify(token, cert, function(err, decoded) {
       if(err) throw err; else resolve(decoded);
     });
@@ -29,7 +29,6 @@ function createAuthToken(payload){
 
 async function authenticate(authToken){
   let payload = null;
-  let authToken = authToken;
   if(authToken != ''){
     try{
       payload = await validateAuthToken(authToken);
@@ -41,19 +40,6 @@ async function authenticate(authToken){
   }else
     throw new Error('Unable to authenticate client: auth token not provided.');
   return payload;
-}
-
-async function authenticate(res, req, next){
-  try{
-    let payload = await security.authenticate(utils.getCookie(req.headers.cookie, 'authToken'));
-    req.username = payload.username;
-    next();
-  }catch(e){
-    res.statusCode = 301;
-    res.setHeader('Location', '/');
-    res.end();
-    console.log(e);
-  }
 }
 
 module.exports = {

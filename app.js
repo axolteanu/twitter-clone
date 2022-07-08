@@ -1,6 +1,6 @@
 const config = require('./config/config.js');
-const db = require('./db.js');
-const server = require('./server.js');
+const db = require('./services/db.js');
+const server = require('./services/server.js');
 
 let main = async function main(){
   await db.connect(config.dbConInfo);

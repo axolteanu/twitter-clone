@@ -15,5 +15,7 @@ loadConfigs();
 module.exports = {
   dbConInfo: configs.dbConInfo,
   port: configs.port,
-  mediaTypes: new Map(Object.entries(configs.mediaTypes))
+  mediaTypes: new Map(Object.entries(configs.mediaTypes)),
+  https: configs.https,
+  jwt: configs.jwt
 }

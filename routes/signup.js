@@ -1,7 +1,7 @@
-let db = require('../db.js');
-let security = require('../security/security.js');
+let db = require('../services/db.js');
+let security = require('../services/security.js');
 
-async function handle(req, res){
+module.exports.handle = async function handle(req, res){
   let data = '';
   req.on('data', (chunk) => {
     data += chunk;
@@ -27,12 +27,8 @@ async function handle(req, res){
       });
       res.end();
     }catch(e){
-      console.log(err);
+      console.log(e);
       console.log("User was not saved"); 
     }
   });
-}
-
-module.exports = {
-  handle
 }
