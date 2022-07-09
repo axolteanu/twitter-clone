@@ -21,11 +21,8 @@ module.exports.handle = async function handle(req, res){
       await db.query(sql);
       console.log("1 user saved");
       let authToken = security.createAuthToken({username: params.get('email')});
-      res.writeHead(301,{
-        'Location': '/',
-        'Set-Cookie': `authToken=${authToken}; Max-Age=864000; Secure; HttpOnly`
-      });
-      res.end();
+      res.setHeader('Set-Cookie', `authToken=${authToken}; Max-Age=864000; Secure; HttpOnly`);
+      res.redirect(301, '/');
     }catch(e){
       console.log(e);
       console.log("User was not saved"); 

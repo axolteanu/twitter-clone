@@ -7,8 +7,4 @@ let main = async function main(){
   server.start(config.port);
 }
 
-try{
-  main();
-}catch(e){
-  console.log(e);
-}
+main();

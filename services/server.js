@@ -11,6 +11,8 @@ const logout = require("../routes/logout.js");
 
 const handler = express();
 
+handler.set('view engine', 'ejs');
+handler.set('views', './views');
 handler.use(logger);
 handler.use(express.static('public'))
 handler.use(cookieParser());
@@ -26,9 +28,7 @@ async function authenticationHandler(req, res, next){
     next();
   }catch(e){
     res.setHeader('Set-Cookie', `authToken=; Max-Age=0`);
-    res.statusCode = 301;
-    res.setHeader('Location', '/');
-    res.end();
+    res.redirect(301, '/');
     console.log(e);
   }
 }
