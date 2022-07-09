@@ -20,30 +20,17 @@ function createAuthToken(payload){
 
  function validateAuthToken(token){
   return new Promise(resolve => {
+    if(token === undefined)
+      throw new Error('Auth token not provided');
     var cert = fs.readFileSync(config.jwt.publicKeyPath);
     jwt.verify(token, cert, function(err, decoded) {
-      if(err) throw err; else resolve(decoded);
+      if(err) throw new Error('Auth token invalid.'); else resolve(decoded);
     });
   });
-}
-
-async function authenticate(authToken){
-  let payload = null;
-  if(authToken != undefined){
-    try{
-      payload = await validateAuthToken(authToken);
-      isAuthenticated = true;
-    }catch(e){
-      console.log(e);
-      throw new Error('Unable to authenticate client: auth token not valid.');
-    }
-  }else
-    throw new Error('Unable to authenticate client: auth token not provided.');
-  return payload;
 }
 
 module.exports = {
   createPasswordHash,
   createAuthToken,
-  authenticate
+  validateAuthToken
 }

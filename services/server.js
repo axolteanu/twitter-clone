@@ -1,6 +1,7 @@
 const https = require("https");
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const fs = require('fs');
 const config = require("../config/config.js");
 const security = require("./security.js");
@@ -16,21 +17,23 @@ handler.set('views', './views');
 handler.use(logger);
 handler.use(express.static('public'))
 handler.use(cookieParser());
+handler.use(bodyParser.urlencoded({ extended: true }));
 handler.get('/', index.handle);
 handler.post('/signup', signup.handle);
-handler.get('/home', authenticationHandler, home.handle);
-handler.post('/logout', authenticationHandler, logout.handle);
+handler.get('/home', authenticate, home.handle);
+handler.post('/logout', authenticate, logout.handle);
 
-async function authenticationHandler(req, res, next){
-  try{
-    let payload = await security.authenticate(req.cookies.authToken);
-    req.username = payload.username;
+async function authenticate(req, res, next){
+  security.validateAuthToken(req.cookies.authToken).
+  then(payload => {
+    req.payload = payload;
     next();
-  }catch(e){
+  }).
+  catch(e => {
     res.setHeader('Set-Cookie', `authToken=; Max-Age=0`);
     res.redirect(301, '/');
     console.log(e);
-  }
+  });
 }
 
 function logger(req, res, next){
