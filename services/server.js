@@ -23,7 +23,7 @@ handler.post('/signup', signup.handle);
 handler.get('/home', authenticate, home.handle);
 handler.post('/logout', authenticate, logout.handle);
 
-async function authenticate(req, res, next){
+function authenticate(req, res, next){
   security.validateAuthToken(req.cookies.authToken).
   then(payload => {
     req.payload = payload;
@@ -33,6 +33,7 @@ async function authenticate(req, res, next){
     res.setHeader('Set-Cookie', `authToken=; Max-Age=0`);
     res.redirect(301, '/');
     console.log(e);
+    console.log('Authentication failed.')
   });
 }
 
