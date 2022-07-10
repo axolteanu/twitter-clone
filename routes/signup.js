@@ -1,5 +1,5 @@
-const db = require('../services/db.js');
-const security = require('../services/security.js');
+const db = require('../services/db');
+const security = require('../services/security');
 
 module.exports.handle = async function(req, res){
   let params = new URLSearchParams(req.body);

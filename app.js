@@ -1,6 +1,6 @@
-const config = require('./config/config.js');
-const db = require('./services/db.js');
-const server = require('./services/server.js');
+const config = require('./config/config');
+const db = require('./services/db');
+const server = require('./services/server');
 
 let run = async () => {
   try{

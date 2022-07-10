@@ -3,12 +3,12 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const config = require("../config/config.js");
-const security = require("./security.js");
-const index = require("../routes/index.js");
-const home = require("../routes/home.js")
-const signup = require("../routes/signup.js");
-const logout = require("../routes/logout.js");
+const config = require("../config/config");
+const security = require("./security");
+const index = require("../routes/index");
+const home = require("../routes/home")
+const signup = require("../routes/signup");
+const logout = require("../routes/logout");
 
 const handler = express();
 

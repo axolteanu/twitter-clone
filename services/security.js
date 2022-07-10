@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const config = require("../config/config.js")
+const config = require("../config/config")
 
 function createPasswordHash(password){
   let salt = crypto.randomBytes(32).toString('hex');
