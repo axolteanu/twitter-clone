@@ -1,4 +1,4 @@
-let mysql = require('mysql2');
+const mysql = require('mysql2');
 
 let connection = null;
 
