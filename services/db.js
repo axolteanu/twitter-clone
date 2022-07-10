@@ -7,9 +7,9 @@ function connect (conInfo){
   return new Promise(resolve => {
     connection.connect(err => {
       if(err){
-        console.log(err);
+        console.log(err); 
         throw new Error("Failed to connect to database.");
-      }else
+       }else 
         resolve();
     });
   });
@@ -18,11 +18,7 @@ function connect (conInfo){
 function query(sql){
   return new Promise(resolve => {
     connection.query(sql, (err, res) => {
-      if(err){
-        console.log(err);
-        throw new Error("Database query failed."); 
-      }else 
-        resolve(res);
+      if(err) throw err; else resolve(res);
     });
   });
 }

@@ -1,15 +1,16 @@
 const fs = require('fs');
 
 let configs = {};
-loadConfigs = function (){
+let loadConfigs = function (){
   try{
     let data = fs.readFileSync("./config/config.json");
     configs = JSON.parse(data);
   }catch(e){
     console.log(e);
-    console.log("Could not load configs.");
+    throw new Error("Could not load configs.");
   }
 }
+
 loadConfigs();
 
 module.exports = {
