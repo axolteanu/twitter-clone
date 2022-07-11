@@ -4,11 +4,11 @@ let connection = null;
 
 function connect (conInfo){
   connection = mysql.createConnection(conInfo);
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     connection.connect(err => {
       if(err){
         console.log(err); 
-        throw new Error("Failed to connect to database.");
+        reject("Failed to connect to database.");
        }else 
         resolve();
     });
@@ -16,9 +16,12 @@ function connect (conInfo){
 }
 
 function query(sql){
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     connection.query(sql, (err, res) => {
-      if(err) throw err; else resolve(res);
+      if(err) 
+        reject(err);
+      else 
+        resolve(res);
     });
   });
 }

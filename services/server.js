@@ -1,7 +1,6 @@
 const https = require("https");
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const fs = require('fs');
 const config = require("../config/config");
 const security = require("./security");
@@ -17,7 +16,7 @@ handler.set('views', './views');
 handler.use(logger);
 handler.use(express.static('public'))
 handler.use(cookieParser());
-handler.use(bodyParser.urlencoded({ extended: true }));
+handler.use(express.urlencoded({ extended: true }));
 handler.get('/', index.handle);
 handler.post('/signup', signup.handle);
 handler.get('/home', authenticate, home.handle);

@@ -19,12 +19,15 @@ function createAuthToken(payload){
 }
 
  function validateAuthToken(token){
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     if(token === undefined)
-      throw new Error('Auth token not provided');
+      reject('Auth token not provided');
     var cert = fs.readFileSync(config.jwt.publicKeyPath);
     jwt.verify(token, cert, function(err, decoded) {
-      if(err) throw new Error('Auth token invalid.'); else resolve(decoded);
+      if(err)
+        reject('Auth token invalid.'); 
+      else 
+        resolve(decoded);
     });
   });
 }
