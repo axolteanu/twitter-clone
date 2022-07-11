@@ -2,7 +2,7 @@ const mysql = require('mysql2');
 
 let connection = null;
 
-function connect (conInfo){
+function connect(conInfo){
   connection = mysql.createConnection(conInfo);
   return new Promise((resolve, reject) => {
     connection.connect(err => {

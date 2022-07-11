@@ -1,7 +1,6 @@
 module.exports.handle = function (req, res) {
-  if(req.cookies.authToken != undefined){
+  if(req.cookies.authToken != undefined)
     res.redirect(301, '/home');
-  }else{
+  else
     res.render('index');
-  }
 }
