@@ -1,3 +1,4 @@
+const util = require('util');
 const db = require('../services/db');
 const security = require('../services/security');
 
@@ -13,7 +14,7 @@ module.exports.handle = async function(req, res, next){
       '${params.get('email')}',
       '${dob}'
     )`;
-    await db.query(sql);
+    await util.promisify(db.connection.query.bind(db.connection))(sql);
     let authToken = security.createAuthToken({username: params.get('email')});
     res.setHeader('Set-Cookie', `authToken=${authToken}; Max-Age=864000; Secure; HttpOnly`);
     res.redirect(301, '/');

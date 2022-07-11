@@ -1,32 +1,19 @@
+const util = require('util');
 const mysql = require('mysql2');
 
-let connection = null;
-
-function connect(conInfo){
-  connection = mysql.createConnection(conInfo);
-  return new Promise((resolve, reject) => {
-    connection.connect(err => {
-      if(err){
-        console.log(err); 
-        reject("Failed to connect to database.");
-       }else 
-        resolve();
-    });
-  });
-}
-
-function query(sql){
-  return new Promise((resolve, reject) => {
-    connection.query(sql, (err, res) => {
-      if(err) 
-        reject(err);
-      else 
-        resolve(res);
-    });
-  });
-}
-
-module.exports = {
+const db = {
   connect,
-  query
+  connection: null
 }
+
+async function connect(conInfo){
+  try{
+    db.connection = mysql.createConnection(conInfo);
+    await util.promisify(db.connection.connect.bind(db.connection))();
+  }catch(e){
+    console.log(e); 
+    return Promise.reject("Failed to connect to database.");
+  }
+}
+
+module.exports = db;

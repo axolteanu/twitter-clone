@@ -1,3 +1,4 @@
+const util = require('util');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
@@ -18,18 +19,24 @@ function createAuthToken(payload){
   return token;
 }
 
- function validateAuthToken(token){
-  return new Promise((resolve, reject) => {
-    if(token === undefined)
-      reject('Auth token not provided');
-    var cert = fs.readFileSync(config.jwt.publicKeyPath);
-    jwt.verify(token, cert, function(err, decoded) {
-      if(err)
-        reject('Auth token invalid.'); 
-      else 
-        resolve(decoded);
-    });
-  });
+ async function validateAuthToken(token){
+  if(token === undefined)
+      return Promise.reject('Auth token not provided');
+  
+  var cert = null;
+  try{
+    cert = fs.readFileSync(config.jwt.publicKeyPath);
+  }catch(e){
+    console.log(e);
+    return Promise.reject('Auth token could not be validated.');
+  }
+
+  try{
+    return await util.promisify(jwt.verify)(token, cert);
+  }catch(e){
+    console.log(e); 
+    return Promise.reject('Auth token invalid.');
+  }
 }
 
 module.exports = {

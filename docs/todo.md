@@ -4,5 +4,4 @@
 - Add signin feature.
 - Add validation to signup form.
 - Learn how to organize .css and .js files.
-- Try using 'util' module to promisify functions instead of manually writing functions that return a promise.
 - Log errors in a file.
