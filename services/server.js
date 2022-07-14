@@ -13,7 +13,7 @@ const handler = express();
 
 handler.set('view engine', 'ejs');
 handler.set('views', './views');
-handler.use(logger);
+handler.use(log);
 handler.use(express.static('public'))
 handler.use(cookieParser());
 handler.use(express.urlencoded({ extended: true }));
@@ -24,7 +24,7 @@ handler.post('/logout', authenticate, logout.handle);
 
 async function authenticate(req, res, next){
   try{
-    req.payload = await security.validateAuthToken(req.cookies.authToken);
+    req.authData = await security.validateAuthToken(req.cookies.authToken);
     req.authTokenValid = true;
   }catch(e){
     res.setHeader('Set-Cookie', 'authToken=; Max-Age=0');
@@ -37,7 +37,7 @@ async function authenticate(req, res, next){
     next();
 }
 
-function logger(req, res, next){
+function log(req, res, next){
   let timestamp = (new Date()).toLocaleString('en-US', {timeZone: 'Canada/Central'});
   console.log(`[${timestamp}] ${req.method} ${req.url}`);
   next();

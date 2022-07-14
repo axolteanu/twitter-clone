@@ -1,3 +1,3 @@
 module.exports.handle = function (req, res) {
-  res.render('home', {username: req.payload.username});
+  res.render('home', {authData: JSON.stringify(req.authData)});
 }
