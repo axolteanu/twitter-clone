@@ -1,9 +1,4 @@
-- Add React to /home:
-  - Import react and reactdom scripts in home.ejs.
-  - Add home.js in react folder. This will contain the React code.
-  - Run babel watch on react folder and output in public/js.
-  - Import js/home.js script in home.ejs.
-  - Create root element in home.ejs.
+- Fix horizontal overflow, particularly when opening sign-up form.
 - Understand how errors are/should be handled. Make sure the application is not left in an unwanted state after an error occurs.
 - Make sure that all requests are handled appropriately no matter how and in what order they are sent. (Create diagram to help you.)
   e.g. What if I send a POST /signup with a valid auth token -> Redirect to home.
