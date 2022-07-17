@@ -3,7 +3,7 @@
   <head>
     <link href="css/index.css" rel="stylesheet">
   </head>
-  <body>
+  <body onload="onResize()" onresize="onResize()">
     <div id="loc">
       <div id="img-div">
         <img src="images/big-bg.png">
@@ -57,14 +57,14 @@
                 <select id="month-select" name="dob-month" required></select>
                 <label>Month</label>
               </div>
-              <!--<div class="dynamic-select">
+              <div class="dynamic-select">
                 <select id="day-select" name="dob-day" required></select>
                 <label>Day</label>
               </div>
               <div class="dynamic-select">
                 <select id="year-select" name="dob-year" required></select>
                 <label>Year</label>
-              </div>-->
+              </div>
             </div>
           </div>
         </div>

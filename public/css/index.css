@@ -307,4 +307,9 @@ a{
   #header-2{
     font-size: 20px;
   }
+  .pup{
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+  }
 }

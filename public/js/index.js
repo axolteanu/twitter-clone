@@ -1,6 +1,7 @@
 document.getElementById('exit-pup-img').addEventListener('click', (e) => {
   document.getElementById('signup-pup').style.display = 'none';
   document.getElementById('grayout-div').style.display = 'none';
+  document.body.style.overflowY = 'auto';
 });
 
 let dynamicInputs = document.getElementsByClassName('dynamic-text-input');
@@ -117,10 +118,10 @@ function keepOrResetDays(month, year){
   // TODO: Reinit day-select but keep selection if valid
 }
 
-
 function showSignUpPup(){
   document.getElementById('signup-pup').style.display = 'flex';
-  document.getElementById('grayout-div').style.display = 'flex';
+  document.getElementById('grayout-div').style.display = 'grid';
+  document.body.style.overflowY = 'hidden';
 }
 
 /*document.getElementById('link').addEventListener('click', function(event) {
