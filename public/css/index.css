@@ -313,3 +313,9 @@ a{
     border-radius: 0;
   }
 }
+
+@media screen and (max-height: 500px) {
+  .pup{
+    height: 400px;
+  }
+}
