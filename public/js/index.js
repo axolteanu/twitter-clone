@@ -1,21 +1,3 @@
-let dynamicInputs = document.getElementsByClassName('dynamic-text-input');
-for(let i = 0; i < dynamicInputs.length; i++){
-  dynamicInputs[i].children[0].addEventListener('focusin', (e) => {
-    let elem = e.target.parentElement.children[1];
-    elem.style.top = '10px';
-    elem.style.fontSize = '13px';
-    elem.style.color = 'rgb(29,155,240)';
-  });
-  dynamicInputs[i].addEventListener('focusout', (e) => {
-    let elem = e.target.parentElement.children[1];
-    if(e.target.parentElement.children[0].value === ''){
-      elem.style.top = '20px';
-      elem.style.fontSize = '18px';
-    }
-    elem.style.color = 'rgb(72,72,72)';
-  });
-}
-
 let dynamicSelects = document.getElementsByClassName('dynamic-select');
 for(let i = 0; i < dynamicSelects.length; i++){
   dynamicSelects[i].children[0].addEventListener('focusin', (e) => {

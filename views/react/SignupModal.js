@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormModal } from './FormModal';
+import { TextInput } from './TextInput';
 
 export class SignupModal extends React.Component{
   constructor(props){
@@ -11,18 +12,9 @@ export class SignupModal extends React.Component{
       <FormModal action="/signup" handleExitClick={this.props.handleExitClick}>
         <FormModal.Body>
           <div>Create your account</div>
-          <div className="dynamic-text-input">
-            <input name="name" />
-            <label>Name</label>
-          </div>
-          <div className="dynamic-text-input">
-            <input name="password" type="password" />
-            <label>Password</label>
-          </div>
-          <div className="dynamic-text-input">
-            <input name="email" />
-            <label>Email</label>
-          </div>
+          <TextInput name="name" label="Name" type="text"/>
+          <TextInput name="password" label="Password" type="password"/>
+          <TextInput name="email" label="Email" type="text"/>
           <div id="dob-section">
             <h5>Date of birth</h5>
             <p>
