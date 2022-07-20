@@ -1,9 +1,3 @@
-document.getElementById('exit-pup-img').addEventListener('click', (e) => {
-  document.getElementById('signup-pup').style.display = 'none';
-  document.getElementById('grayout-div').style.display = 'none';
-  document.body.style.overflowY = 'auto';
-});
-
 let dynamicInputs = document.getElementsByClassName('dynamic-text-input');
 for(let i = 0; i < dynamicInputs.length; i++){
   dynamicInputs[i].children[0].addEventListener('focusin', (e) => {
@@ -117,13 +111,6 @@ function keepOrResetDays(month, year){
 
   // TODO: Reinit day-select but keep selection if valid
 }
-
-function showSignUpPup(){
-  document.getElementById('signup-pup').style.display = 'flex';
-  document.getElementById('grayout-div').style.display = 'grid';
-  document.body.style.overflowY = 'hidden';
-}
-
 /*document.getElementById('link').addEventListener('click', function(event) {
   event.preventDefault(); 
   window.history.pushState({},"", event.target.href);

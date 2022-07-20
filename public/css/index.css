@@ -4,6 +4,17 @@ body{
   min-height: 100vh;
   overflow-x: hidden;
 }
+#root{
+  min-height: inherit;
+}
+#modal-root{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
 #loc{
   display: grid;
   min-height: inherit;
@@ -102,7 +113,8 @@ a{
   background-color: white;
   color: black;
   border-radius: 15px;
-  display: none;
+  display: flex;
+  flex-direction: column;
 }
 
 #grayout-div{
@@ -114,10 +126,6 @@ a{
   background-color: black;
   opacity: 0.5;
   display: none;
-}
-
-#signup-pup{
-  flex-direction: column;
 }
 
 #exit-pup-img{
@@ -252,10 +260,22 @@ a{
   padding: 25px 80px;
 }
 
-#pup-footer > input{
+#pup-footer-signup{
   height: 50px;
   border: none;
   background-color: rgb(29,155,240);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+#pup-footer-login{
+  height: 50px;
+  border: none;
+  background-color: rgb(72,72,72);
   color: white;
   font-size: 16px;
   font-weight: bold;

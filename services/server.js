@@ -14,7 +14,7 @@ const handler = express();
 handler.set('view engine', 'ejs');
 handler.set('views', './views');
 handler.use(log);
-handler.use(express.static('public'))
+handler.use(express.static('public'));
 handler.use(cookieParser());
 handler.use(express.urlencoded({ extended: true }));
 handler.get('/', index.handle);
