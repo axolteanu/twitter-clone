@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOMClient from 'react-dom/client';
-import { IndexModal } from './IndexModal';
+import { LoginModal } from './LoginModal';
+import { SignupModal } from './SignupModal';
 
 const showModalType = {
   none: 'none',
@@ -15,20 +16,20 @@ class Index extends React.Component{
       showModal: showModalType.none
     }
     this.handleSignUpClick = this.handleSignUpClick.bind(this);
-    this.handleSignInClick = this.handleSignInClick.bind(this);
+    this.handleLogInClick = this.handleLogInClick.bind(this);
     this.handleExitModalClick = this.handleExitModalClick.bind(this);
   }
   
   handleSignUpClick(){
     this.setState({
       showModal: showModalType.signup
-    })
+    });
   }
 
-  handleSignInClick(){
+  handleLogInClick(){
     this.setState({
       showModal: showModalType.login
-    })
+    });
   }
 
   handleExitModalClick(){
@@ -37,8 +38,23 @@ class Index extends React.Component{
     });
   }
 
+  renderWithModal(main, showModal){
+    let modal = null;
+    if(showModal === showModalType.signup)
+      modal = <SignupModal handleExitClick={this.handleExitModalClick}/>;
+    else if(showModal === showModalType.login)
+      modal = <LoginModal handleExitClick={this.handleExitModalClick}/>;
+    
+    return (
+      <React.Fragment>
+        {main}
+        {modal}
+      </React.Fragment>
+    );
+  }
+
   render() {
-    const loc = (
+    const main = (
       <div id="loc">
         <div id="img-div">
           <img src="images/big-bg.png"/>
@@ -54,72 +70,16 @@ class Index extends React.Component{
             <a>Privacy Policy</a>, including <a>Cookie Use</a>.</p>
           </div>
           <div id="header-3">Already have an account?</div>
-          <button onClick={this.handleSignInClick}>Log in</button>
+          <button onClick={this.handleLogInClick}>Log in</button>
         </div>
       </div>
     );
 
     const showModal = this.state.showModal;
     if(showModal === showModalType.none)
-      return loc;
-    else{
-      let modal = null;
-      if(showModal === showModalType.signup){
-        modal = (
-          <IndexModal handleExitClick={this.handleExitModalClick} type={showModal}>
-            <div id="step-1">
-              <div>Create your account</div>
-              <div className="dynamic-text-input">
-                <input name="name" />
-                <label>Name</label>
-              </div>
-              <div className="dynamic-text-input">
-                <input name="password" type="password" />
-                <label>Password</label>
-              </div>
-              <div className="dynamic-text-input">
-                <input name="email" />
-                <label>Email</label>
-              </div>
-              <div id="dob-section">
-                <h5>Date of birth</h5>
-                <p>
-                  This will not be shown publicly. Confirm your own age, even if
-                  this account is for a business, a pet, or something else.
-                </p>
-                <div id="dob-select">
-                  <div className="dynamic-select">
-                    <select id="month-select" name="dob-month" required></select>
-                    <label>Month</label>
-                  </div>
-                  <div className="dynamic-select">
-                    <select id="day-select" name="dob-day" required></select>
-                    <label>Day</label>
-                  </div>
-                  <div className="dynamic-select">
-                    <select id="year-select" name="dob-year" required></select>
-                    <label>Year</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </IndexModal>
-        );
-      }else if(showModal === showModalType.login){
-        modal = (
-          <IndexModal handleExitClick={this.handleExitModalClick} type={showModal}>
-            <div>Log in to your account</div>
-          </IndexModal>
-        );
-      }
-      
-      return (
-        <React.Fragment>
-          {loc}
-          {modal}
-        </React.Fragment>
-      );
-    }
+      return main;
+    else
+      return this.renderWithModal(main, showModal)
   }
 }
 

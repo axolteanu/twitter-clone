@@ -150,24 +150,24 @@ a{
   overflow-y: auto;
 }
 
-#step-1 > div:nth-child(1){
+#pup-form > div:nth-child(1){
   font-size: 28px;
   font-weight: bold;
 }
 
-#step-1 > div:nth-child(2){
+#pup-form > div:nth-child(2){
   margin-top: 30px;
 }
 
-#step-1 > div:nth-child(3){
+#pup-form > div:nth-child(3){
   margin-top: 30px;
 }
 
-#step-1 > div:nth-child(4){
+#pup-form > div:nth-child(4){
   margin-top: 30px;
 }
 
-#step-1 > div:nth-child(5){
+#pup-form > div:nth-child(5){
   margin-top: 30px;
 }
 
@@ -260,7 +260,7 @@ a{
   padding: 25px 80px;
 }
 
-#pup-footer-signup{
+#pup-submit-signup{
   height: 50px;
   border: none;
   background-color: rgb(29,155,240);
@@ -272,7 +272,7 @@ a{
   cursor: pointer;
 }
 
-#pup-footer-login{
+#pup-submit-login{
   height: 50px;
   border: none;
   background-color: rgb(72,72,72);

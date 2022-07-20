@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export class IndexModal extends React.Component{
+const Body = ({ children }) => <React.Fragment>{children}</React.Fragment>;
+const SubmitInput = ({ children }) => <React.Fragment>{children}</React.Fragment>;
+
+export class FormModal extends React.Component{
   constructor(props){
     super(props);
     this.modalRoot = document.createElement('div');
     this.modalRoot.id = 'modal-root';
   }
+
+  static Body = Body;
+  static SubmitInput = SubmitInput;
 
   componentDidMount(){
     document.body.appendChild(this.modalRoot);
@@ -14,21 +20,11 @@ export class IndexModal extends React.Component{
   }
 
   componentWillUnmount(){
-    document.body.style.overflowY = 'initial';
     document.body.removeChild(this.modalRoot);
+    document.body.style.overflowY = 'initial';
   }
 
   render(){
-    let submitId;
-    let submitVal;
-    if(this.props.type === 'signup'){
-      submitId = 'pup-footer-signup'
-      submitVal = 'Sign up';
-    }else if(this.props.type === 'login'){
-      submitId = 'pup-footer-login'
-      submitVal = 'Log in';
-    }
-
     const view = (
       <div className="pup">
         <div id="pup-header">
@@ -38,11 +34,11 @@ export class IndexModal extends React.Component{
             <line x1="24" y1="12" x2="12" y2="24" stroke="black" strokeWidth="1.75"/>
           </svg>
         </div>
-        <form id="pup-form" action="/signup" method="post">
-          {this.props.children}
+        <form id="pup-form" action={this.props.action} method="post">
+          {this.props.children.find(({ type }) => type === Body)}
         </form>
         <div id="pup-footer">
-        <input id={submitId} type="submit" form="pup-form" value={submitVal}/>
+          {this.props.children.find(({ type }) => type === SubmitInput)}
         </div>
       </div>
     );
