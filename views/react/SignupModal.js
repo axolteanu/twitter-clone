@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormModal } from './FormModal';
 import { TextInput } from './TextInput';
+import { DobSelectInput } from './DobSelectInput';
 
 export class SignupModal extends React.Component{
   constructor(props){
@@ -21,20 +22,7 @@ export class SignupModal extends React.Component{
               This will not be shown publicly. Confirm your own age, even if
               this account is for a business, a pet, or something else.
             </p>
-            <div id="dob-select">
-              <div className="dynamic-select">
-                <select id="month-select" name="dob-month" required></select>
-                <label>Month</label>
-              </div>
-              <div className="dynamic-select">
-                <select id="day-select" name="dob-day" required></select>
-                <label>Day</label>
-              </div>
-              <div className="dynamic-select">
-                <select id="year-select" name="dob-year" required></select>
-                <label>Year</label>
-              </div>
-            </div>
+            <DobSelectInput/>
           </div>
         </FormModal.Body>
         <FormModal.SubmitInput>

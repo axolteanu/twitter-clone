@@ -1,22 +1,62 @@
-let dynamicSelects = document.getElementsByClassName('dynamic-select');
-for(let i = 0; i < dynamicSelects.length; i++){
-  dynamicSelects[i].children[0].addEventListener('focusin', (e) => {
-    e.target.style.outline = '2px solid rgb(29,155,240)';
-    e.target.parentElement.children[1].style.color = 'rgb(29,155,240)';
-  });
-  dynamicSelects[i].children[0].addEventListener('focusout', (e) => {
-    e.target.style.outline = 'none';
-    e.target.parentElement.children[1].style.color = 'rgb(72,72,72)';
-  });
-}
+import React from 'react';
 
-initMonths();
-initDays();
-initYears();
+let monthInput;
+let dayInput;
+let yearInput;
+
+export class DobSelectInput extends React.Component{
+  constructor(props){
+    super(props);
+    this.monthInput = React.createRef();
+    this.dayInput = React.createRef();
+    this.yearInput = React.createRef();
+  }
+
+  componentDidMount(){
+    let dynamicSelects = document.getElementsByClassName('dynamic-select');
+    for(let i = 0; i < dynamicSelects.length; i++){
+      dynamicSelects[i].children[0].addEventListener('focusin', (e) => {
+        e.target.style.outline = '2px solid rgb(29,155,240)';
+        e.target.parentElement.children[1].style.color = 'rgb(29,155,240)';
+      });
+      dynamicSelects[i].children[0].addEventListener('focusout', (e) => {
+        e.target.style.outline = 'none';
+        e.target.parentElement.children[1].style.color = 'rgb(72,72,72)';
+      });
+    }
+
+    monthInput = this.monthInput.current
+    dayInput = this.dayInput.current
+    yearInput = this.yearInput.current
+
+    initMonths();
+    initDays();
+    initYears();
+  }
+
+  render(){
+    return (
+      <div id="dob-select">
+        <div className="dynamic-select">
+          <select ref={this.monthInput} name="dob-month" required></select>
+          <label>Month</label>
+        </div>
+        <div className="dynamic-select">
+          <select ref={this.dayInput} name="dob-day" required></select>
+          <label>Day</label>
+        </div>
+        <div className="dynamic-select">
+          <select ref={this.yearInput} name="dob-year" required></select>
+          <label>Year</label>
+        </div>
+      </div>
+    );
+  }
+}
 
 // Months
 function initMonths(){
-  let selectElem = document.getElementById('month-select');
+  let selectElem = monthInput;
   //addOption(selectElem, '', -1)
   addOption(selectElem, 'January', 1);
   addOption(selectElem, 'February', 2);
@@ -31,13 +71,13 @@ function initMonths(){
   addOption(selectElem, 'November', 11);
   addOption(selectElem, 'December', 12);
   selectElem.addEventListener('change', (e) => {
-    keepOrResetDays(e.target.value, document.getElementById('year-select').value);
+    keepOrResetDays(e.target.value, yearInput.value);
   });
 }
 
 // Days
 function initDays(year = -1, month = -1){
-  let selectElem = document.getElementById('day-select');
+  let selectElem = dayInput;
   if(year < 0){
     year = (new Date()).getFullYear();
   }
@@ -55,13 +95,13 @@ function initDays(year = -1, month = -1){
 function initYears(){
   let nYears = 120;
   let year = (new Date()).getFullYear();
-  let selectElem = document.getElementById('year-select');
+  let selectElem = yearInput;
   //addOption(selectElem, '', -1);
   for(let i = 0; i <= nYears; i++, year--){
     addOption(selectElem, year);
   }
   selectElem.addEventListener('change', (e) => {
-    keepOrResetDays(document.getElementById('month-select').value, e.target.value);
+    keepOrResetDays(monthInput.value, e.target.value);
   });
 }
 
@@ -87,13 +127,9 @@ function keepOrResetDays(month, year){
   console.log(`${month}, ${year}`);
   let nDays = getNumberOfDays(year, month);
   console.log(`nDays, ${nDays}`);
-  let daySelectElem = document.getElementById('day-select');
+  let daySelectElem = dayInput;
   daySelectElem.innerHTML = '';
   initDays(year, month);
 
   // TODO: Reinit day-select but keep selection if valid
 }
-/*document.getElementById('link').addEventListener('click', function(event) {
-  event.preventDefault(); 
-  window.history.pushState({},"", event.target.href);
-});*/

@@ -4,10 +4,11 @@ export class TextInput extends React.Component{
   constructor(props){
     super(props);
     this.inputWrapper = React.createRef();
+    this.input = React.createRef();
   }
 
   componentDidMount(){
-    this.inputWrapper.current.children[0].addEventListener('focusin', (e) => {
+    this.input.current.addEventListener('focusin', (e) => {
       let elem = e.target.parentElement.children[1];
       elem.style.top = '10px';
       elem.style.fontSize = '13px';
@@ -26,7 +27,7 @@ export class TextInput extends React.Component{
   render(){
     return (
       <div ref={this.inputWrapper} className="dynamic-text-input">
-        <input name={this.props.name} type={this.props.type}/>
+        <input ref={this.input} name={this.props.name} type={this.props.type}/>
         <label>{this.props.label}</label>
       </div>
     );
