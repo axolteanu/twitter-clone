@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const Body = ({ children }) => <React.Fragment>{children}</React.Fragment>;
-const SubmitInput = ({ children }) => <React.Fragment>{children}</React.Fragment>;
+import './FormModal.css';
 
 export class FormModal extends React.Component{
   constructor(props){
@@ -10,9 +8,6 @@ export class FormModal extends React.Component{
     this.modalRoot = document.createElement('div');
     this.modalRoot.id = 'modal-root';
   }
-
-  static Body = Body;
-  static SubmitInput = SubmitInput;
 
   componentDidMount(){
     document.body.appendChild(this.modalRoot);
@@ -35,10 +30,10 @@ export class FormModal extends React.Component{
           </svg>
         </div>
         <form id="pup-form" action={this.props.action} method="post">
-          {this.props.children.find(({ type }) => type === Body)}
+          {this.props.children}
         </form>
-        <div id="pup-footer">
-          {this.props.children.find(({ type }) => type === SubmitInput)}
+        <div id="modal-footer">
+        <input id={this.props.submitId} className="modal-submit" type="submit" form="pup-form" value={this.props.submitValue} style={this.props.submitStyle}/>
         </div>
       </div>
     );
