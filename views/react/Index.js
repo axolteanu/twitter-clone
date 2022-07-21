@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOMClient from 'react-dom/client';
 import { LoginModal } from './LoginModal';
 import { SignupModal } from './SignupModal';
+import './Index.css';
 
 const showModalType = {
   none: 'none',

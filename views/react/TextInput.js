@@ -1,4 +1,5 @@
 import React from 'react';
+import './TextInput.css';
 
 export class TextInput extends React.Component{
   constructor(props){
@@ -26,7 +27,7 @@ export class TextInput extends React.Component{
 
   render(){
     return (
-      <div ref={this.inputWrapper} className="dynamic-text-input">
+      <div ref={this.inputWrapper} className="text-input-wrapper">
         <input ref={this.input} name={this.props.name} type={this.props.type}/>
         <label>{this.props.label}</label>
       </div>

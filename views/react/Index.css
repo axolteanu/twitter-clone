@@ -1,0 +1,102 @@
+#loc{
+  display: grid;
+  min-height: inherit;
+}
+
+#loc > div:nth-child(1){
+  position: relative;
+}
+
+#loc > div:nth-child(1) > img:nth-child(1){
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  vertical-align:top;
+}
+
+#loc > div:nth-child(1) > img:nth-child(2){
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+#loc > div:nth-child(2){
+  padding: 30px;
+}
+
+#header-1{
+  margin-top: 60px;
+  font-size: 60px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+#header-2{
+  margin-top: 60px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#header-3{
+  margin-top: 30px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+#loc > div:nth-child(2) > div:nth-child(4){
+  margin-top: 30px;
+  width: 300px;
+}
+
+#loc > div:nth-child(2) > div:nth-child(4) > button{
+  width: inherit;
+  padding: 10px;
+  background-color: rgb(29,155,240);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 20px;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+#loc > div:nth-child(2) > div:nth-child(4) > button:hover{
+  background-color: rgb(26,140,216);
+}
+
+#loc > div:nth-child(2) > div:nth-child(4) > p{
+  font-size: 10px;
+}
+
+#loc > div:nth-child(2) > div:nth-child(4) > p > a{
+  font-size: 10px;
+  color: rgb(29,155,240);
+}
+
+#loc > div:nth-child(2) > button:last-child{
+  margin-top: 20px;
+  width: 300px;
+  display: block;
+  padding: 10px;
+  background-color: white;
+  color: rgb(29,155,240);
+  font-size: 13px;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+#loc > div:nth-child(2) > button:last-child:hover{
+  background-color: rgb(232,245,253);
+}
+
+a{
+  text-decoration: none;
+  cursor: pointer;
+}

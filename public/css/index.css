@@ -4,9 +4,11 @@ body{
   min-height: 100vh;
   overflow-x: hidden;
 }
+
 #root{
   min-height: inherit;
 }
+
 #modal-root{
   position: absolute;
   top: 0;
@@ -14,179 +16,6 @@ body{
   height: 100%;
   width: 100%;
   background-color: rgba(0,0,0,0.5);
-}
-#loc{
-  display: grid;
-  min-height: inherit;
-}
-#loc > div:nth-child(1){
-  position: relative;
-}
-#loc > div:nth-child(1) > img:nth-child(1){
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  vertical-align:top;
-}
-#loc > div:nth-child(1) > img:nth-child(2){
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-}
-#loc > div:nth-child(2){
-  padding: 30px;
-}
-#header-1{
-  margin-top: 60px;
-  font-size: 60px;
-  font-weight: bold;
-  white-space: nowrap;
-}
-#header-2{
-  margin-top: 60px;
-  font-size: 30px;
-  font-weight: bold;
-}
-#header-3{
-  margin-top: 30px;
-  font-size: 15px;
-  font-weight: bold;
-}
-#loc > div:nth-child(2) > div:nth-child(4){
-  margin-top: 30px;
-  width: 300px;
-}
-#loc > div:nth-child(2) > div:nth-child(4) > button{
-  width: inherit;
-  padding: 10px;
-  background-color: rgb(29,155,240);
-  color: white;
-  font-size: 13px;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 20px;
-  border: none;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-#loc > div:nth-child(2) > div:nth-child(4) > button:hover{
-  background-color: rgb(26,140,216);
-}
-#loc > div:nth-child(2) > div:nth-child(4) > p{
-  font-size: 10px;
-} 
-#loc > div:nth-child(2) > div:nth-child(4) > p > a{
-  font-size: 10px;
-  color: rgb(29,155,240);
-}
-#loc > div:nth-child(2) > button:last-child{
-  margin-top: 20px;
-  width: 300px;
-  display: block;
-  padding: 10px;
-  background-color: white;
-  color: rgb(29,155,240);
-  font-size: 13px;
-  font-weight: bold;
-  text-align: center;
-  border: 1px solid lightgray;
-  border-radius: 20px;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-#loc > div:nth-child(2) > button:last-child:hover{
-  background-color: rgb(232,245,253);
-}
-a{
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.pup{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 90%;
-  width: 600px;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  color: black;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-}
-
-#exit-pup-img{
-  margin-right: 30px;
-}
-
-#exit-pup-img:hover{
-  fill: lightgray;
-  cursor: pointer;
-  transition: fill 0.2s linear;
-}
-
-#pup-header{
-  display: flex;
-  align-items: center;
-  padding: 8px;
-}
-
-#pup-form{
-  flex-grow: 1;
-  padding: 0 80px;
-  overflow-y: auto;
-}
-
-#pup-form > div:nth-child(1){
-  font-size: 28px;
-  font-weight: bold;
-}
-
-#pup-form > div:nth-child(2){
-  margin-top: 30px;
-}
-
-#pup-form > div:nth-child(3){
-  margin-top: 30px;
-}
-
-#pup-form > div:nth-child(4){
-  margin-top: 30px;
-}
-
-#pup-form > div:nth-child(5){
-  margin-top: 30px;
-}
-
-.dynamic-text-input{
-  position: relative;
-}
-
-.dynamic-text-input > input{
-  width: 100%;
-  height: 60px;
-  border-radius: 5px;
-  border: 1px solid lightgray;
-  padding: 20px 10px 0 10px;
-  box-sizing: border-box;
-  font-size: 18px;
-}
-
-.dynamic-text-input > input:focus{
-  outline-color: rgb(29,155,240);
-}
-
-.dynamic-text-input > label{
-  position: absolute;
-  top: 20px;
-  left: 10px;
-  font-size: 16px;
-  height: 58px;
-  color: rgb(72, 72, 72);
-  transition: top 0.08s linear 0s, font-size 0.08s linear 0s;
-  pointer-events: none;
 }
 
 @media screen and (min-width: 1000px) {
@@ -228,7 +57,7 @@ a{
   #header-2{
     font-size: 20px;
   }
-  .pup{
+  .modal{
     height: 100%;
     width: 100%;
     border-radius: 0;
@@ -236,7 +65,7 @@ a{
 }
 
 @media screen and (max-height: 500px) {
-  .pup{
+  .modal{
     height: 400px;
   }
 }

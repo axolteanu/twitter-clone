@@ -4,20 +4,20 @@ import './DobSelect.css'
 export class DobSelect extends React.Component{
   constructor(props){
     super(props);
-    this.dobSelect = React.createRef();
+    this.dobSelectWrapper = React.createRef();
     this.monthSelect = React.createRef();
     this.daySelect = React.createRef();
     this.yearSelect = React.createRef();
   }
 
   componentDidMount(){
-    let selectDivs = this.dobSelect.current.getElementsByTagName('div');
-    for(let i = 0; i < selectDivs.length; i++){
-      selectDivs[i].children[0].addEventListener('focusin', e => {
+    let selectWrappers = this.dobSelectWrapper.current.getElementsByTagName('div');
+    for(let i = 0; i < selectWrappers.length; i++){
+      selectWrappers[i].children[0].addEventListener('focusin', e => {
         e.target.style.outline = '2px solid rgb(29,155,240)';
         e.target.parentElement.children[1].style.color = 'rgb(29,155,240)';
       });
-      selectDivs[i].children[0].addEventListener('focusout', e => {
+      selectWrappers[i].children[0].addEventListener('focusout', e => {
         e.target.style.outline = 'none';
         e.target.parentElement.children[1].style.color = 'rgb(72,72,72)';
       });
@@ -101,7 +101,7 @@ export class DobSelect extends React.Component{
 
   render(){
     return (
-      <div ref={this.dobSelect} className="dob-select">
+      <div ref={this.dobSelectWrapper} className="dob-select-wrapper">
         <div>
           <select ref={this.monthSelect} name="dob-month" required></select>
           <label>Month</label>
