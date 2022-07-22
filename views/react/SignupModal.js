@@ -11,7 +11,7 @@ export class SignupModal extends React.Component{
 
   render(){
     return(
-      <FormModal action="/signup" submitValue="Sign up" submitId="signup-submit-signup" handleExitClick={this.props.handleExitClick}>
+      <FormModal action="/signup" submitValue="Sign up" submitClass="signup-modal-submit" handleExitClick={this.props.handleExitClick}>
         <div>Create your account</div>
         <TextInput name="name" label="Name" type="text"/>
         <TextInput name="password" label="Password" type="password"/>

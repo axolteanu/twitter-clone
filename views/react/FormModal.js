@@ -33,7 +33,7 @@ export class FormModal extends React.Component{
           {this.props.children}
         </form>
         <div id="modal-footer">
-        <input id={this.props.submitId} className="modal-submit" type="submit" form="modal-form" value={this.props.submitValue} style={this.props.submitStyle}/>
+        <input id={this.props.submitId} className={`modal-submit ${this.props.submitClass}`} type="submit" form="modal-form" value={this.props.submitValue}/>
         </div>
       </div>
     );

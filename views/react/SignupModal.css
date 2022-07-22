@@ -12,7 +12,7 @@
   margin-bottom: 20px;
 }
 
-#signup-submit-signup{
+.signup-modal-submit{
   background-color: rgb(29,155,240);
   color: white;
 }

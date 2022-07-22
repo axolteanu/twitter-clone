@@ -56,21 +56,21 @@ class Index extends React.Component{
 
   render() {
     const main = (
-      <div id="loc">
-        <div id="img-div">
+      <div id="main">
+        <div id="img-section">
           <img src="images/big-bg.png"/>
           <img src="images/big-white-logo.svg" width="300" height="300"/>
         </div>
-        <div id="form-div">
+        <div id="menu-section">
           <img src="images/small-blue-logo.svg" width="45" height="57"/>
-          <div id="header-1">Happening now</div>
-          <div id="header-2">Join Twitter today.</div>
+          <div>Happening now</div>
+          <div>Join Twitter today.</div>
           <div>
             <button onClick={this.handleSignUpClick}>Sign up</button>
             <p>By signing up, you agree to the <a>Terms of Service</a> and&nbsp;
             <a>Privacy Policy</a>, including <a>Cookie Use</a>.</p>
           </div>
-          <div id="header-3">Already have an account?</div>
+          <div>Already have an account?</div>
           <button onClick={this.handleLogInClick}>Log in</button>
         </div>
       </div>

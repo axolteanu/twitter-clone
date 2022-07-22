@@ -76,3 +76,9 @@
   border-radius: 25px;
   cursor: pointer;
 }
+
+@media screen and (max-height: 500px) {
+  .modal{
+    height: 400px;
+  }
+}

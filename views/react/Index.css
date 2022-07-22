@@ -1,55 +1,52 @@
-#loc{
+#main{
   display: grid;
   min-height: inherit;
 }
 
-#loc > div:nth-child(1){
+#img-section{
   position: relative;
 }
 
-#loc > div:nth-child(1) > img:nth-child(1){
+#img-section > img:nth-child(1){
   height: 100%;
   width: 100%;
   object-fit: cover;
   vertical-align:top;
 }
 
-#loc > div:nth-child(1) > img:nth-child(2){
+#img-section > img:nth-child(2){
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
 }
 
-#loc > div:nth-child(2){
+#menu-section{
   padding: 30px;
 }
 
-#header-1{
+/* Happening now */
+#menu-section > div:nth-child(2){
   margin-top: 60px;
   font-size: 60px;
   font-weight: bold;
   white-space: nowrap;
 }
 
-#header-2{
+/* Join Twitter today */
+#menu-section > div:nth-child(3){
   margin-top: 60px;
   font-size: 30px;
   font-weight: bold;
 }
 
-#header-3{
-  margin-top: 30px;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-#loc > div:nth-child(2) > div:nth-child(4){
+/* Sign up section */
+#menu-section > div:nth-child(4){
   margin-top: 30px;
   width: 300px;
 }
 
-#loc > div:nth-child(2) > div:nth-child(4) > button{
+#menu-section > div:nth-child(4) > button{
   width: inherit;
   padding: 10px;
   background-color: rgb(29,155,240);
@@ -63,20 +60,33 @@
   cursor: pointer;
 }
 
-#loc > div:nth-child(2) > div:nth-child(4) > button:hover{
+#menu-section > div:nth-child(4) > button:hover{
   background-color: rgb(26,140,216);
 }
 
-#loc > div:nth-child(2) > div:nth-child(4) > p{
+#menu-section > div:nth-child(4) a{
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#menu-section > div:nth-child(4) > p{
   font-size: 10px;
 }
 
-#loc > div:nth-child(2) > div:nth-child(4) > p > a{
+#menu-section > div:nth-child(4) > p > a{
   font-size: 10px;
   color: rgb(29,155,240);
 }
 
-#loc > div:nth-child(2) > button:last-child{
+/* Already have an account? */
+#menu-section > div:nth-child(5){
+  margin-top: 30px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* Log in */
+#menu-section > button:nth-child(6){
   margin-top: 20px;
   width: 300px;
   display: block;
@@ -92,11 +102,46 @@
   cursor: pointer;
 }
 
-#loc > div:nth-child(2) > button:last-child:hover{
+#menu-section > button:nth-child(6):hover{
   background-color: rgb(232,245,253);
 }
 
-a{
-  text-decoration: none;
-  cursor: pointer;
+@media screen and (min-width: 1000px) {
+  #main{
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'a b';
+  }
+  #img-section{
+    grid-area: a;
+  }
+  #menu-section{
+    grid-area: b;
+  }
+}
+
+@media screen and (max-width: 1000px){
+  #main{
+    grid-template-rows: 1fr 300px;
+    grid-template-areas: 'a' 'b';
+  }
+  #menu-section{
+    grid-area: a;
+  }
+  #img-section{
+    grid-area: b;
+  }
+}
+
+@media screen and (max-width: 600px){
+  #menu-section > div:nth-child(2){
+    font-size: 35px;
+  }
+  #menu-section > div:nth-child(3){
+    font-size: 20px;
+  }
+  .modal{
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+  }
 }

@@ -9,7 +9,7 @@ export class LoginModal extends React.Component{
 
   render(){
     return(
-      <FormModal action="/login" submitValue="Log in" submitId="modal-submit-login" handleExitClick={this.props.handleExitClick}>
+      <FormModal action="/login" submitValue="Log in" submitClass="login-modal-submit" handleExitClick={this.props.handleExitClick}>
         <div>Log in to your account</div>
       </FormModal>
     );
