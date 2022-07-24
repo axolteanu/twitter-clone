@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "webpack serve",
-    "build": "webpack"
+    "build": "webpack",
+    "app": "node app.js"
   },
   "dependencies": {
     "@babel/core": "^7.18.9",
