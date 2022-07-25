@@ -1,3 +1,5 @@
-export const Contexts = {
-  ModalContext: null
-};
+import React from 'react';
+
+export const ModalContext = React.createContext({
+  handleExitClick: () => {}
+});

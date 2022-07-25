@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOMClient from 'react-dom/client';
 import { LoginModal } from './LoginModal';
 import { SignupModal } from './SignupModal';
-import { Contexts } from './Contexts';
+import { ModalContext } from './Contexts';
 import './Index.css';
 
 const showModalType = {
@@ -13,7 +13,6 @@ const showModalType = {
 
 function Index(){
   const [showModal, setShowModal] = useState(showModalType.none);
-  Contexts.ModalContext = React.createContext();
 
   function handleSignUpClick(){
     setShowModal(showModalType.signup);
@@ -37,11 +36,11 @@ function Index(){
     return (
       <React.Fragment>
         {main}
-        <Contexts.ModalContext.Provider value={{
+        <ModalContext.Provider value={{
           handleExitClick: handleExitModalClick
         }}>
           {modal}
-        </Contexts.ModalContext.Provider>
+        </ModalContext.Provider>
       </React.Fragment>
     );
   }

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Contexts } from './Contexts';
+import { ModalContext } from './Contexts';
 import './FormModal.css';
 
 export function FormModal(props){
@@ -16,12 +16,12 @@ export function FormModal(props){
     }
   });
 
-  const modalContextType = useContext(Contexts.ModalContext);
+  const modalCt = useContext(ModalContext);
 
   const view = (
     <div className="modal">
       <div id="modal-header">
-        <svg id="modal-exit-img" width="36" height="36" fill="transparent" onClick={modalContextType.handleExitClick}>
+        <svg id="modal-exit-img" width="36" height="36" fill="transparent" onClick={modalCt.handleExitClick}>
           <circle cx="18" cy="18" r="17"/>
           <line x1="12" y1="12" x2="24" y2="24" stroke="black" strokeWidth="1.75"/>
           <line x1="24" y1="12" x2="12" y2="24" stroke="black" strokeWidth="1.75"/>
