@@ -6,7 +6,7 @@ import './SignupModal.css';
 
 export function SignupModal(props){
   return(
-    <FormModal action="/signup" submitValue="Sign up" submitClass="signup-modal-submit" handleExitClick={props.handleExitClick}>
+    <FormModal action="/signup" submitValue="Sign up" submitClass="signup-modal-submit">
       <div>Create your account</div>
       <TextInput name="name" label="Name" type="text"/>
       <TextInput name="password" label="Password" type="password"/>
