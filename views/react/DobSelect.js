@@ -2,30 +2,26 @@ import React, { useEffect, useRef } from 'react';
 import './DobSelect.css'
 
 export function DobSelect(){
-  const dobSelectWrapper = useRef();
   const monthSelect = useRef();
   const daySelect = useRef();
   const yearSelect = useRef();
 
   useEffect(() => {
-    let selectWrappers = dobSelectWrapper.current.getElementsByTagName('div');
-    for(let i = 0; i < selectWrappers.length; i++){
-      selectWrappers[i].children[0].addEventListener('focusin', e => {
-        e.target.style.outline = '2px solid rgb(29,155,240)';
-        e.target.parentElement.children[1].style.color = 'rgb(29,155,240)';
-      });
-      selectWrappers[i].children[0].addEventListener('focusout', e => {
-        e.target.style.outline = 'none';
-        e.target.parentElement.children[1].style.color = 'rgb(72,72,72)';
-      });
-    }
-
     initMonths();
     initDays();
     initYears();
   });
 
-  // Months
+  function onFocusSelect(e){
+    e.target.style.outline = '2px solid rgb(29,155,240)';
+    e.target.parentElement.children[1].style.color = 'rgb(29,155,240)';
+  }
+
+  function onBlurSelect(e){
+    e.target.style.outline = 'none';
+        e.target.parentElement.children[1].style.color = 'rgb(72,72,72)';
+  }
+
   function initMonths(){
     let selectElem = monthSelect.current;
     addOption(selectElem, 'January', 1);
@@ -45,7 +41,6 @@ export function DobSelect(){
     });
   }
 
-  // Days
   function initDays(year = -1, month = -1){
     let selectElem = daySelect.current;
     if(year < 0)
@@ -58,7 +53,6 @@ export function DobSelect(){
     }
   }
 
-  // Years
   function initYears(){
     let nYears = 120;
     let year = (new Date()).getFullYear();
@@ -97,17 +91,17 @@ export function DobSelect(){
   }
 
   return (
-    <div ref={dobSelectWrapper} className="dob-select-wrapper">
+    <div className="dob-select-wrapper">
       <div>
-        <select ref={monthSelect} name="dob-month" required></select>
+        <select ref={monthSelect} name="dob-month" onFocus={onFocusSelect} onBlur={onBlurSelect}></select>
         <label>Month</label>
       </div>
       <div>
-        <select ref={daySelect} name="dob-day" required></select>
+        <select ref={daySelect} name="dob-day" onFocus={onFocusSelect} onBlur={onBlurSelect}></select>
         <label>Day</label>
       </div>
       <div>
-        <select ref={yearSelect} name="dob-year" required></select>
+        <select ref={yearSelect} name="dob-year" onFocus={onFocusSelect} onBlur={onBlurSelect}></select>
         <label>Year</label>
       </div>
     </div>
