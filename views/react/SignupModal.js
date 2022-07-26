@@ -4,7 +4,7 @@ import { TextInput } from './TextInput';
 import { DobSelect } from './DobSelect';
 import './SignupModal.css';
 
-export function SignupModal(props){
+export function SignupModal(){
   return(
     <FormModal action="/signup" submitValue="Sign up" submitClass="signup-modal-submit">
       <div>Create your account</div>

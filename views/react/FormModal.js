@@ -6,13 +6,34 @@ import './FormModal.css';
 export function FormModal(props){
   const modalRoot = document.createElement('div');
   modalRoot.id = 'modal-root';
+  
+  const root = document.getElementById('root');
+  const initScrollY = window.scrollY;
+  
+  const updateOnResize = () => {
+    if(window.scrollY > 0){
+      root.style.marginTop = (window.scrollY - (root.clientHeight - modalRoot.clientHeight)) + 'px';
+      if(initScrollY > window.scrollY)
+        modalRoot.style.top = root.style.marginTop;
+      else{
+        modalRoot.style.top = window.scrollY + 'px';
+      }
+    }else{
+      root.style.marginTop = 'initial';
+      modalRoot.style.top = 0;
+    }
+  }
 
   useEffect(() => {
+    window.addEventListener('resize', updateOnResize);
     document.body.appendChild(modalRoot);
     document.body.style.overflowY = 'hidden';
+    modalRoot.style.top = initScrollY + 'px';
     return () => {
+      window.removeEventListener('resize', updateOnResize);
       document.body.removeChild(modalRoot);
-    document.body.style.overflowY = 'initial';
+      document.body.style.overflowY = 'initial';
+      root.style.marginTop = 'initial';
     }
   });
 
