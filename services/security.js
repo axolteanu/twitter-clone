@@ -10,6 +10,11 @@ function createPasswordHash(password){
   return {salt: salt, hash: hash};
 }
 
+function verifyPassword(password, userHash, userSalt){
+  let hash = crypto.pbkdf2Sync(password, userSalt, 1000, 32, 'sha512').toString('hex');
+  return hash === userHash;
+}
+
 function createAuthToken(payload){
   let privateKey = fs.readFileSync(config.jwt.privateKeyPath);
   let token = jwt.sign(
@@ -41,6 +46,7 @@ function createAuthToken(payload){
 
 module.exports = {
   createPasswordHash,
+  verifyPassword,
   createAuthToken,
   validateAuthToken
 }

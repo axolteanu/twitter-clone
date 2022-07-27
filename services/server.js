@@ -7,6 +7,7 @@ const security = require("./security");
 const index = require("../routes/index");
 const home = require("../routes/home")
 const signup = require("../routes/signup");
+const login = require("../routes/login");
 const logout = require("../routes/logout");
 
 const handler = express();
@@ -19,6 +20,7 @@ handler.use(cookieParser());
 handler.use(express.urlencoded({ extended: true }));
 handler.get('/', index.handle);
 handler.post('/signup', signup.handle);
+handler.post('/login', login.handle);
 handler.get('/home', authenticate, home.handle);
 handler.post('/logout', authenticate, logout.handle);
 

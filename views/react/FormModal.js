@@ -51,7 +51,7 @@ export function FormModal(props){
           <line x1="24" y1="12" x2="12" y2="24" stroke="black" strokeWidth="1.75"/>
         </svg>
       </div>
-      <form className={`modal-form ${props.formClass}`} action={props.action} method="post">
+      <form id="modal-form" className={`modal-form ${props.formClass}`} action={props.action} method="post">
         {props.children}
       </form>
       <div className="modal-footer">
