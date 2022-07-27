@@ -12,59 +12,39 @@
   flex-direction: column;
 }
 
-#modal-exit-img{
+.modal-exit-img{
   margin-right: 30px;
 }
 
-#modal-exit-img:hover{
+.modal-exit-img:hover{
   fill: lightgray;
   cursor: pointer;
   transition: fill 0.2s linear;
 }
 
-#modal-header{
+.modal-header{
   display: flex;
   align-items: center;
   padding: 8px;
 }
 
-#modal-form{
+.modal-form{
   flex-grow: 1;
   padding: 0 80px;
   overflow-y: auto;
 }
 
-#modal-form > div:nth-child(1){
+.form-title {
   font-size: 28px;
   font-weight: bold;
 }
 
-#modal-form > div:nth-child(2){
-  margin-top: 30px;
-}
-
-#modal-form > div:nth-child(3){
-  margin-top: 30px;
-}
-
-#modal-form > div:nth-child(4){
-  margin-top: 30px;
-}
-
-#modal-form > div:nth-child(5){
-  margin-top: 30px;
-}
-
-#modal-footer{
+.modal-footer{
   border-top: 1px solid lightgray;
   box-shadow: 0 -2px 10px -5px lightgray;
   display: grid;
   place-items: center;
   padding: 25px 80px;
-}
-
-#modal-footer > button:hover{
-  background-color: rgb(26,140,216);
 }
 
 .modal-submit{

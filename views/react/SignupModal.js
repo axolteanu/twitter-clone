@@ -6,12 +6,12 @@ import './SignupModal.css';
 
 export function SignupModal(){
   return(
-    <FormModal action="/signup" submitValue="Sign up" submitClass="signup-modal-submit">
-      <div>Create your account</div>
+    <FormModal action="/signup" submitValue="Sign up" formClass="signup-modal-form" submitClass="signup-modal-submit">
+      <div className="form-title">Create your account</div>
       <TextInput name="name" label="Name" type="text"/>
       <TextInput name="password" label="Password" type="password"/>
       <TextInput name="email" label="Email" type="text"/>
-      <div id="signup-dob-section">
+      <div className="signup-dob-section">
         <h5>Date of birth</h5>
         <p>
           This will not be shown publicly. Confirm your own age, even if

@@ -2,3 +2,15 @@
   background-color: rgb(72,72,72);
   color: white;
 }
+
+.login-modal-submit:hover{
+  background-color: rgb(0,0,0);
+}
+
+.login-modal-form > div:nth-child(2){
+  margin-top: 30px;
+}
+
+.login-modal-form > div:nth-child(3){
+  margin-top: 30px;
+}
