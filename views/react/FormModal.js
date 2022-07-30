@@ -1,8 +1,8 @@
-import React, { cloneElement, useContext, useEffect, useReducer, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef} from 'react';
 import ReactDOM from 'react-dom';
 import { ModalContext } from './Contexts';
-import './FormModal.css';
 import { ValidatableField } from './ValidatableField';
+import './FormModal.css';
 
 // Showing pop-up when the page is scrolled down would also work fine with 'window.scrollTo(0,0)' without having to use updateOnResize().
 // The updateOnResize() function was implemented as an exercise to make it work without scrolling to the top.
@@ -15,14 +15,20 @@ export function FormModal(props){
   const initScrollY = window.scrollY;
   
   let validationFuncRefs = [];
-  const childrenWithValidationFunctionRefs = React.Children.map(props.children, child => {
-    if(child.type === ValidatableField){
-      const validationFuncRef = useRef();
-      validationFuncRefs.push(validationFuncRef);
-      return React.cloneElement(child, { validationFuncRef: validationFuncRef });
-    }
-    return child;
-  });
+  const childrenWithValidationFunctionRefs = getChildrenWithValidationFuncRefs(props.children);
+  
+  function getChildrenWithValidationFuncRefs(children){
+    return React.Children.map(children, child => {
+      if(child.type === ValidatableField){
+        const validationFuncRef = useRef();
+        validationFuncRefs.push(validationFuncRef);
+        return React.cloneElement(child, { validationFuncRef: validationFuncRef });
+      }else if(child.props.children && typeof child.props.children === 'object'){
+        return getChildrenWithValidationFuncRefs(child.props.children);
+      }else
+        return child;
+    });
+  }
 
   const modalCt = useContext(ModalContext);
 

@@ -19,7 +19,7 @@ export function ValidatableField(props){
     if(errorMsgs.length > 0){
       isFieldValid = false;
       let newErrorOutput = errorMsgs.shift();
-      errorMsgs.forEach(msg => newErrorOutput + `\n ${msg}`);
+      errorMsgs.forEach(msg => newErrorOutput += `\n${msg}`);
       setErrorOutput(newErrorOutput);
     }else
       setErrorOutput('');

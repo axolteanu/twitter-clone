@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import './DobSelect.css'
 
-export function DobSelect(){
-  const monthSelect = useRef();
-  const daySelect = useRef();
-  const yearSelect = useRef();
+export function DobSelect(props){
+  const monthSelect = props.selectedMonthRef != undefined ? props.selectedMonthRef : useRef();
+  const daySelect = props.selectedDayRef != undefined ? props.selectedDayRef : useRef();
+  const yearSelect = props.selectedYearRef != undefined ? props.selectedYearRef : useRef();
 
   useEffect(() => {
     initMonthSelect();
