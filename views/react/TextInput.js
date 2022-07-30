@@ -20,7 +20,7 @@ export function TextInput(props){
 
   return (
     <div className="text-input-wrapper" onBlur={onBlurWrapper}>
-      <input name={props.name} type={props.type} onFocus={onFocusInput}/>
+      <input ref={props.inputRef} name={props.name} type={props.type} onFocus={onFocusInput}/>
       <label>{props.label}</label>
     </div>
   );
