@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from 'react';
 import './DobSelect.css'
 
 export function DobSelect(props){
-  const monthSelect = props.selectedMonthRef != undefined ? props.selectedMonthRef : useRef();
-  const daySelect = props.selectedDayRef != undefined ? props.selectedDayRef : useRef();
-  const yearSelect = props.selectedYearRef != undefined ? props.selectedYearRef : useRef();
+  const monthSelect = useRef();
+  const daySelect = useRef();
+  const yearSelect = useRef();
 
   useEffect(() => {
     initMonthSelect();
@@ -52,11 +52,13 @@ export function DobSelect(props){
     select.append(optElem);
   }
 
-  function onChangeMonth(){
+  function onChangeMonth(e){
+    props.onChange(e);
     updateDays();
   }
 
-  function onChangeYear(){
+  function onChangeYear(e){
+    props.onChange(e);
     updateDays();
   }
 
@@ -96,8 +98,8 @@ export function DobSelect(props){
       <div>
         <select 
           ref={monthSelect} 
-          name="dob-month"
-          selected = ""
+          name="month"
+          value={props.month || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
           onChange={onChangeMonth}></select>
@@ -106,17 +108,18 @@ export function DobSelect(props){
       <div>
         <select 
           ref={daySelect} 
-          name="dob-day" 
-          selected = ""
+          name="day" 
+          value={props.day || ""}
           onFocus={onFocusSelect} 
-          onBlur={onBlurSelect}></select>
+          onBlur={onBlurSelect}
+          onChange={props.onChange}></select>
         <label>Day</label>
       </div>
       <div>
         <select 
           ref={yearSelect} 
-          name="dob-year" 
-          selected = ""
+          name="year" 
+          value={props.year || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
           onChange={onChangeYear}></select>

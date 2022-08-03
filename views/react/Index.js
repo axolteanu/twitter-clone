@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOMClient from 'react-dom/client';
-import { LoginModal } from './LoginModal';
-import { SignupModal } from './SignupModal';
+import { LoginForm } from './LoginForm';
+import { SignupForm } from './SignupForm';
+import { withValidation } from './WithValidation';
 import { ModalContext } from './Contexts';
 import './Index.css';
 
@@ -27,11 +28,11 @@ function Index(){
   }
 
   function renderWithModal(main, showModal){
-    let modal = null;
+    let Form = null;
     if(showModal === showModalType.signup)
-      modal = <SignupModal/>;
+      Form = withValidation(SignupForm);
     else if(showModal === showModalType.login)
-      modal = <LoginModal/>;
+      Form = withValidation(LoginForm);
     
     return (
       <React.Fragment>
@@ -39,7 +40,7 @@ function Index(){
         <ModalContext.Provider value={{
           handleExitClick: handleExitModalClick
         }}>
-          {modal}
+          <Form/>
         </ModalContext.Provider>
       </React.Fragment>
     );

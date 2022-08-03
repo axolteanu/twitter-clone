@@ -1,35 +1,18 @@
-import React, { useContext, useEffect, useRef} from 'react';
+import React, { useContext, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import { ModalContext } from './Contexts';
-import { ValidatableField } from './ValidatableField';
-import './FormModal.css';
+import './ModalForm.css';
 
 // Showing pop-up when the page is scrolled down would also work fine with 'window.scrollTo(0,0)' without having to use updateOnResize().
 // The updateOnResize() function was implemented as an exercise to make it work without scrolling to the top.
 
-export function FormModal(props){
+export function ModalForm(props){
   const modalRoot = document.createElement('div');
   modalRoot.id = 'modal-root';
   
   const root = document.getElementById('root');
   const initScrollY = window.scrollY;
   
-  let validationFuncRefs = [];
-  const childrenWithValidationFunctionRefs = getChildrenWithValidationFuncRefs(props.children);
-  
-  function getChildrenWithValidationFuncRefs(children){
-    return React.Children.map(children, child => {
-      if(child.type === ValidatableField){
-        const validationFuncRef = useRef();
-        validationFuncRefs.push(validationFuncRef);
-        return React.cloneElement(child, { validationFuncRef: validationFuncRef });
-      }else if(child.props.children && typeof child.props.children === 'object'){
-        return getChildrenWithValidationFuncRefs(child.props.children);
-      }else
-        return child;
-    });
-  }
-
   const modalCt = useContext(ModalContext);
 
   const updateOnResize = () => {
@@ -59,16 +42,6 @@ export function FormModal(props){
     }
   });
 
-  function onSubmit(e){
-    e.preventDefault();
-    const validationResults = validationFuncRefs.map(f => f.current());
-    while(validationResults.length > 0){
-      if(!validationResults.shift())
-        return false;
-    }
-    document.getElementById('modal-form').submit();
-  }
-
   const view = (
     <div className="modal">
       <div className="modal-header">
@@ -78,11 +51,12 @@ export function FormModal(props){
           <line x1="24" y1="12" x2="12" y2="24" stroke="black" strokeWidth="1.75"/>
         </svg>
       </div>
-      <form id="modal-form" className={`modal-form ${props.formClass}`} action={props.action} onSubmit={onSubmit} method="post">
-          {childrenWithValidationFunctionRefs}
+      <form id="modal-form" ref={props.formRef} className={`modal-form ${props.className}`} action={props.action} onSubmit={props.onSubmit} method="post">
+        <div className="form-title">{props.title}</div>
+        {props.children}
       </form>
       <div className="modal-footer">
-        <input className={`modal-submit ${props.submitClass}`} type="submit" form="modal-form" value={props.submitValue}/>
+        {props.submit}
       </div>
     </div>
   );
