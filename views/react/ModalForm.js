@@ -5,12 +5,14 @@ export function ModalForm(props){
  
   return (
     <div className="modal-form-wrapper">
-      <form id="modal-form" ref={props.formRef} className={`modal-form ${props.className}`} action={props.action} onSubmit={props.onSubmit} method="post">
+      <form id="modal-form" ref={props.formRef} className="modal-form" action={props.action} onSubmit={props.onSubmit} method="post">
         <div className="modal-form-title">{props.title}</div>
-        {props.children}
+        <div className={props.formClassName}>
+          {props.children}
+        </div>
       </form>
       <div className="modal-submit-div">
-        {props.submit}
+        <input className={`modal-submit ${props.submitClassName}`} form="modal-form" type="submit" value="Log in"/>
       </div>
     </div>
   );

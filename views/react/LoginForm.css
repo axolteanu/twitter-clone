@@ -7,10 +7,10 @@
   background-color: rgb(0,0,0);
 }
 
-.login-modal-form > div:nth-child(2){
+.login-modal-form > div:nth-child(1){
   margin-top: 30px;
 }
 
-.login-modal-form > div:nth-child(3){
+.login-modal-form > div:nth-child(2){
   margin-top: 30px;
 }

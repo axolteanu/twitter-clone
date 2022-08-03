@@ -49,10 +49,15 @@ export function SignupForm(props){
     return errorMsg;
   }
 
-  const submit = <input className="modal-submit signup-modal-submit" form="modal-form" type="submit" value="Log in"/>;
-  
   return(
-    <ModalForm id="modal-form" formRef={props.formRef} title="Create your account" className="signup-modal-form" action="/signup" submit={submit} onSubmit={props.onSubmit}>
+    <ModalForm 
+      formRef={props.formRef} 
+      formClassName="signup-modal-form"
+      action="/signup" 
+      title="Create your account" 
+      submitValue="Sign up" 
+      submitClassName="signup-modal-submit"
+      onSubmit={props.onSubmit}>
       <div>
         <TextInput name="name" label="Name" type="text" value={props.values.name} onChange={props.onChange}/>
         <div className='error-output'>{props.errors.name}</div>
