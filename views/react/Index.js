@@ -3,7 +3,7 @@ import ReactDOMClient from 'react-dom/client';
 import { LoginForm } from './LoginForm';
 import { SignupForm } from './SignupForm';
 import { withValidation } from './WithValidation';
-import { ModalContext } from './Contexts';
+import { Modal } from './Modal';
 import './Index.css';
 
 const showModalType = {
@@ -37,11 +37,9 @@ function Index(){
     return (
       <React.Fragment>
         {main}
-        <ModalContext.Provider value={{
-          handleExitClick: handleExitModalClick
-        }}>
+        <Modal handleExitClick={handleExitModalClick}>
           <Form/>
-        </ModalContext.Provider>
+        </Modal>
       </React.Fragment>
     );
   }

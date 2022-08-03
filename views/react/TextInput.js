@@ -18,10 +18,6 @@ export function TextInput(props){
     elem.style.color = 'rgb(29,155,240)';
   }
 
-  useEffect(() => {
-    console.log(props.value);
-  });
-
   return (
     <div className="text-input-wrapper" onBlur={onBlurWrapper}>
       <input name={props.name} type={props.type} value={props.value || ''} onChange={props.onChange} onFocus={onFocusInput}/>
