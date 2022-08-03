@@ -6,7 +6,7 @@ module.exports.handle = async function(req, res, next){
   try{
     let params = new URLSearchParams(req.body);
     let hash = security.createPasswordHash(params.get('password'));
-    let dob = `${params.get('dob-year')}-${params.get('dob-month')}-${params.get('dob-day')}`;
+    let dob = `${params.get('dobYear')}-${params.get('dobMonth')}-${params.get('dobDay')}`;
     let sql = `insert into users (name, passHash, passSalt, email, dob) values (
       '${params.get('name')}',
       '${hash.hash}',

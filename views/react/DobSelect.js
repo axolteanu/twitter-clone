@@ -98,8 +98,8 @@ export function DobSelect(props){
       <div>
         <select 
           ref={monthSelect} 
-          name="month"
-          value={props.month || ""}
+          name="dobMonth"
+          value={props.dobMonth || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
           onChange={onChangeMonth}></select>
@@ -108,8 +108,8 @@ export function DobSelect(props){
       <div>
         <select 
           ref={daySelect} 
-          name="day" 
-          value={props.day || ""}
+          name="dobDay" 
+          value={props.dobDay || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
           onChange={props.onChange}></select>
@@ -118,8 +118,8 @@ export function DobSelect(props){
       <div>
         <select 
           ref={yearSelect} 
-          name="year" 
-          value={props.year || ""}
+          name="dobYear" 
+          value={props.dobYear || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
           onChange={onChangeYear}></select>
