@@ -2,47 +2,29 @@ import React, { useEffect, useRef } from 'react';
 import './DobSelect.css'
 
 export function DobSelect(props){
-  const monthSelect = useRef();
   const daySelect = useRef();
-  const yearSelect = useRef();
 
+  // Update days if month or year changes
   useEffect(() => {
-    initMonthSelect();
-    initDaySelect(31);
-    initYearSelect(120);
-  });
+    let selectedDay = props.dobDay;
+    let nDaysAvailable = getNumberOfDaysInMonth(props.dobYear, props.dobMonth);
+    updateDayOptions(nDaysAvailable);
+    if(selectedDay != ''){
+      if(selectedDay > nDaysAvailable){
+        daySelect.current.value = '';
+        daySelect.current.dispatchEvent(new Event('change', {bubbles:true}));
+      }else
+        daySelect.current.value = selectedDay;
+    }
+  }, [props.dobMonth, props.dobYear]);
 
-  function initMonthSelect(){
-    let selectElem = monthSelect.current;
-    addOption(selectElem, '', '');
-    addOption(selectElem, 'January', 1);
-    addOption(selectElem, 'February', 2);
-    addOption(selectElem, 'March', 3);
-    addOption(selectElem, 'April', 4);
-    addOption(selectElem, 'May', 5);
-    addOption(selectElem, 'June', 6);
-    addOption(selectElem, 'July', 7);
-    addOption(selectElem, 'August', 8);
-    addOption(selectElem, 'September', 9);
-    addOption(selectElem, 'October', 10);
-    addOption(selectElem, 'November', 11);
-    addOption(selectElem, 'December', 12);
-  }
-
-  function initDaySelect(nDays){
+  function updateDayOptions(nDays){
+    daySelect.current.innerHTML = '';
     let selectElem = daySelect.current;
     addOption(selectElem, '', '');
     for(let i = 1; i <= nDays; i++){
       addOption(selectElem, i);
     }
-  }
-
-  function initYearSelect(nYears){
-    let year = (new Date()).getFullYear();
-    let selectElem = yearSelect.current;
-    addOption(selectElem, '', '');
-    for(let i = 0; i <= nYears; i++, year--)
-      addOption(selectElem, year);
   }
 
   function addOption(select, desc, value = desc){
@@ -52,33 +34,10 @@ export function DobSelect(props){
     select.append(optElem);
   }
 
-  function onChangeMonth(e){
-    props.onChange(e);
-    updateDays();
-  }
-
-  function onChangeYear(e){
-    props.onChange(e);
-    updateDays();
-  }
-
-  function updateDays(){
-    let selectedDay = daySelect.current.value;
-    let nDaysAvailable = getNumberOfDayInMonth(yearSelect.current.value, monthSelect.current.value)
-    daySelect.current.innerHTML = '';
-    initDaySelect(nDaysAvailable);
-    if(selectedDay != ''){
-      if(selectedDay > nDaysAvailable)
-        daySelect.current.value = '';
-      else
-        daySelect.current.value = selectedDay;
-    }
-  }
-
-  function getNumberOfDayInMonth(year, month){
-    if(month === '')
+  function getNumberOfDaysInMonth(year, month){
+    if(!month)
       month = 0;
-    if(year === '')
+    if(!year)
       year = 0;
     return (new Date(year, month, 0)).getDate();
   }
@@ -93,16 +52,37 @@ export function DobSelect(props){
     e.target.parentElement.children[1].style.color = 'rgb(72,72,72)';
   }
   
+  const monthOptions = (
+    <React.Fragment>
+      <option value=""></option>
+      <option value="1">January</option>
+      <option value="2">February</option>
+      <option value="3">March</option>
+      <option value="4">April</option>
+      <option value="5">May</option>
+      <option value="6">June</option>
+      <option value="7">July</option>
+      <option value="8">August</option>
+      <option value="9">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </React.Fragment>
+  );
+
+  const year = (new Date()).getFullYear();
+  const nYears = 120;
+  const yearOptions = [...Array(nYears)].map((e,i) => <option value={year - i}>{year - i}</option>);
+
   return (
     <div className="dob-select-wrapper">
       <div>
         <select 
-          ref={monthSelect} 
           name="dobMonth"
           value={props.dobMonth || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
-          onChange={onChangeMonth}></select>
+          onChange={props.onChange}>{monthOptions}</select>
         <label>Month</label>
       </div>
       <div>
@@ -117,12 +97,14 @@ export function DobSelect(props){
       </div>
       <div>
         <select 
-          ref={yearSelect} 
           name="dobYear" 
           value={props.dobYear || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
-          onChange={onChangeYear}></select>
+          onChange={props.onChange}>
+            <option value=""></option>
+            {yearOptions}
+        </select>
         <label>Year</label>
       </div>
     </div>

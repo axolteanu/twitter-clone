@@ -31,7 +31,7 @@ export function withValidation(WrappedForm){
         const arrErrors = [];
         const addError = (errorMsg) => { arrErrors.push(errorMsg) };
         validateFuncsRef.current[name](addError, values[name]);
-        if(arrErrors.length > 0)
+        if(isValid && arrErrors.length > 0)
           isValid = false;
         objErrors[name] = arrErrors;
       });

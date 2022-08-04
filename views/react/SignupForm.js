@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ModalForm } from './ModalForm';
 import { TextInput } from './TextInput';
 import { DobSelect } from './DobSelect';
@@ -52,7 +52,6 @@ export function SignupForm(props){
   function concatArrays(){
     let arrResult = [];
     Array.from(arguments).forEach(arg => {
-      console.log(arg);
       if(arg != undefined && arg.length > 0)
         arrResult = [...arrResult, ...arg];
     });
