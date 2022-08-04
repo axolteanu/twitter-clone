@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ModalForm } from './ModalForm';
 import { TextInput } from './TextInput';
 import { DobSelect } from './DobSelect';
@@ -49,6 +49,16 @@ export function SignupForm(props){
       addError('Year field cannot be empty.');
   }
 
+  function concatArrays(){
+    let arrResult = [];
+    Array.from(arguments).forEach(arg => {
+      console.log(arg);
+      if(arg != undefined && arg.length > 0)
+        arrResult = [...arrResult, ...arg];
+    });
+    return arrResult;
+  }
+
   return(
     <ModalForm 
       formRef={props.formRef} 
@@ -78,9 +88,7 @@ export function SignupForm(props){
         </p>
         <div>
           <DobSelect dobMonth={props.values.dobMonth} dobDay={props.values.dobDay} dobYear={props.values.dobYear} onChange={props.onChange}/>
-          <ErrorOutput source={props.errors.dobMonth}/>
-          <ErrorOutput source={props.errors.dobDay}/>
-          <ErrorOutput source={props.errors.dobYear}/>
+          <ErrorOutput source={concatArrays(props.errors.dobMonth, props.errors.dobDay, props.errors.dobYear)}/>
         </div>
       </div>
     </ModalForm>
