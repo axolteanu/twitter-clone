@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import './WithValidation.css';
 
 export function withValidation(WrappedForm){
   return function FormWithValidation(){
@@ -19,7 +18,7 @@ export function withValidation(WrappedForm){
     function onSubmit(e){
       e.preventDefault();
       if(validate())
-        formRef.current.submit();
+        ;//formRef.current.submit();
       else
         return false;
     }
@@ -28,17 +27,18 @@ export function withValidation(WrappedForm){
       let isValid = true;
       const fieldNames = Object.keys(validateFuncsRef.current);
       fieldNames.forEach(name => {
-        const errorMsg = validateFuncsRef.current[name]();
+        const errors = [];
+        const addError = (errorMsg) => { errors.push(errorMsg) };
+        const errorMsg = validateFuncsRef.current[name](addError, values[name]);
         if(errorMsg)
           isValid = false;
         setErrors(prevErrors => ({
           ...prevErrors, 
-          [name]: errorMsg
+          [name]: errors
         }));
       })
       return isValid;
     }
-    
     return(
       <WrappedForm 
         formRef={formRef}

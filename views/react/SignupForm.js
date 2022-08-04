@@ -2,51 +2,51 @@ import React from 'react';
 import { ModalForm } from './ModalForm';
 import { TextInput } from './TextInput';
 import { DobSelect } from './DobSelect';
+import { ErrorOutput } from './ErrorOutput';
 import './SignupForm.css';
 
 export function SignupForm(props){
-
   props.validateFuncsRef.current.name = validateName;
   props.validateFuncsRef.current.email = validateEmail;
   props.validateFuncsRef.current.password = validatePassword;
-  props.validateFuncsRef.current.dob = validateDob;
+  props.validateFuncsRef.current.dobMonth = validateDobMonth;
+  props.validateFuncsRef.current.dobDay = validateDobDay;
+  props.validateFuncsRef.current.dobYear = validateDobYear;
 
-  function validateName(){
-    let errorMsg = '';
-    if(!props.values['name'])
-      errorMsg += 'Name field cannot be empty.';
-    if(!props.values['name'] > 50)
-      errorMsg += '\nName field cannot be longer than 50 characters.';
-    return errorMsg;
+  function validateName(addError, name){
+    if(!name)
+      addError('Name field cannot be empty.');
+    else if(name > 50)
+      addError('Name field cannot be longer than 50 characters.');
   }
 
-  function validatePassword(){
-    let errorMsg = '';
-    if(!props.values['password'])
-      errorMsg += 'Password field cannot be empty.';
-    if(!props.values['password'] > 50)
-      errorMsg += '\nPassword field cannot be longer than 50 characters.';
-    return errorMsg;
+  function validatePassword(addError, password){
+    if(!password)
+      addError('Password field cannot be empty.', password);
+    else if(password > 50)
+      addError('Password field cannot be longer than 50 characters.', password);
   }
 
-  function validateEmail(){
-    let errorMsg = '';
-    if(!props.values['email'])
-      errorMsg += 'Email field cannot be empty.';
-    if(!props.values['email'] > 50)
-      errorMsg += '\nEmail field cannot be longer than 50 characters.';
-    return errorMsg;
+  function validateEmail(addError, email){
+    if(!email)
+      addError('Email field cannot be empty.', email);
+    else if(props.values['email'] > 50)
+      addError('Email field cannot be longer than 50 characters.', email);
   }
 
-  function validateDob(){
-    let errorMsg = '';
-    if(!props.values['dobMonth'])
-      errorMsg += "Month field cannot be empty.";
-    if(!props.values['dobDay'])
-      errorMsg += "\nDay field cannot be empty.";
-    if(!props.values['dobYear'])
-      errorMsg += "\nYear field cannot be empty.";
-    return errorMsg;
+  function validateDobMonth(addError, dobMonth){
+    if(!dobMonth)
+      addError('Month field cannot be empty.');
+  }
+
+  function validateDobDay(addError, dobDay){
+    if(!dobDay)
+      addError('Day field cannot be empty.');
+  }
+
+  function validateDobYear(addError, dobYear){
+    if(!dobYear)
+      addError('Year field cannot be empty.');
   }
 
   return(
@@ -60,15 +60,15 @@ export function SignupForm(props){
       onSubmit={props.onSubmit}>
       <div>
         <TextInput name="name" label="Name" type="text" value={props.values.name} onChange={props.onChange}/>
-        <div className='error-output'>{props.errors.name}</div>
+        <ErrorOutput source={props.errors.name}/>
       </div>
       <div>
         <TextInput name="password" label="Password" type="password" value={props.values.password} onChange={props.onChange}/>
-        <div className='error-output'>{props.errors.password}</div>
+        <ErrorOutput source={props.errors.password}/>
       </div>
       <div>
         <TextInput name="email" label="Email" type="text" value={props.values.email} onChange={props.onChange}/>
-        <div className='error-output'>{props.errors.email}</div>
+        <ErrorOutput source={props.errors.email}/>
       </div>
       <div className="signup-dob-section">
         <h5>Date of birth</h5>
@@ -78,7 +78,9 @@ export function SignupForm(props){
         </p>
         <div>
           <DobSelect dobMonth={props.values.dobMonth} dobDay={props.values.dobDay} dobYear={props.values.dobYear} onChange={props.onChange}/>
-          <div className='error-output'>{props.errors.dob}</div>
+          <ErrorOutput source={props.errors.dobMonth}/>
+          <ErrorOutput source={props.errors.dobDay}/>
+          <ErrorOutput source={props.errors.dobYear}/>
         </div>
       </div>
     </ModalForm>
