@@ -16,22 +16,26 @@ export function SignupForm(props){
   function validateName(addError, name){
     if(!name)
       addError('Name field cannot be empty.');
-    else if(name > 50)
+    else if(name.length > 50)
       addError('Name field cannot be longer than 50 characters.');
   }
 
   function validatePassword(addError, password){
     if(!password)
       addError('Password field cannot be empty.', password);
-    else if(password > 50)
+    else if(password.length > 50)
       addError('Password field cannot be longer than 50 characters.', password);
   }
 
   function validateEmail(addError, email){
     if(!email)
       addError('Email field cannot be empty.', email);
-    else if(props.values['email'] > 50)
-      addError('Email field cannot be longer than 50 characters.', email);
+    else{
+      if(email.length > 50)
+        addError('Email field cannot be longer than 50 characters.', email);
+      if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+        addError('Email format is not valid.')
+    }
   }
 
   function validateDobMonth(addError, dobMonth){

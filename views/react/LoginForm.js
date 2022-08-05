@@ -11,14 +11,14 @@ export function LoginForm(props){
   function validateEmail(addError, email){
     if(!email)
       addError('Email field cannot be empty.', email);
-    else if(props.values['email'] > 50)
+    else if(email.length > 50)
       addError('Email field cannot be longer than 50 characters.', email);
   }
 
   function validatePassword(addError, password){
     if(!password)
       addError('Password field cannot be empty.', password);
-    else if(password > 50)
+    else if(password.length > 50)
       addError('Password field cannot be longer than 50 characters.', password);
   }
 
