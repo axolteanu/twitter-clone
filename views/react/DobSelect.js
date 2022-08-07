@@ -1,40 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './DobSelect.css'
 
 const nYearOptions = 120;
 
 export function DobSelect(props){
   const daySelect = useRef();
+  const [nDays, setNDays] = useState(31);
 
-  // Update days if month or year changes
   useEffect(() => {
-    let selectedDay = props.dobDay;
-    let nDaysAvailable = getNumberOfDaysInMonth(props.dobYear, props.dobMonth);
-    updateDayOptions(nDaysAvailable);
-    if(selectedDay != ''){
-      if(selectedDay > nDaysAvailable){
-        daySelect.current.value = '';
-        daySelect.current.dispatchEvent(new Event('change', {bubbles:true}));
-      }else
-        daySelect.current.value = selectedDay;
+    if(props.dobDay){
+      let nDaysAvailable = getNumberOfDaysInMonth(props.dobYear, props.dobMonth);
+      if(nDays != nDaysAvailable)
+        setNDays(nDaysAvailable);
     }
   }, [props.dobMonth, props.dobYear]);
 
-  function updateDayOptions(nDays){
-    daySelect.current.innerHTML = '';
-    let selectElem = daySelect.current;
-    addOption(selectElem, '', '');
-    for(let i = 1; i <= nDays; i++){
-      addOption(selectElem, i);
+  useEffect(() => {
+    if(props.dobDay > nDays){
+      daySelect.current.value = '';
+      daySelect.current.dispatchEvent(new Event('change', {bubbles:true}));
     }
-  }
-
-  function addOption(select, desc, value = desc){
-    let optElem = document.createElement('option');
-    optElem.innerHTML = desc;
-    optElem.value = value;
-    select.append(optElem);
-  }
+  }, [nDays]);
 
   function getNumberOfDaysInMonth(year, month){
     if(!month)
@@ -74,6 +60,15 @@ export function DobSelect(props){
     );
   }
 
+  function getDayOptions(){
+    let day = 1;
+    return [<option key="0" value=""/>, ...[...Array(nDays)].map(() => {
+      let option = <option key={day} value={day}>{day}</option>;
+      day++;
+      return option;
+    })];
+  }
+
   function getYearOptions(){
     let year = (new Date()).getFullYear();
     return [<option key="0" value=""/>, ...[...Array(nYearOptions)].map(() => {
@@ -101,7 +96,7 @@ export function DobSelect(props){
           value={props.dobDay || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
-          onChange={props.onChange}></select>
+          onChange={props.onChange}>{getDayOptions()}</select>
         <label>Day</label>
       </div>
       <div>
@@ -110,9 +105,7 @@ export function DobSelect(props){
           value={props.dobYear || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
-          onChange={props.onChange}>
-            {getYearOptions()}
-        </select>
+          onChange={props.onChange}>{getYearOptions()}</select>
         <label>Year</label>
       </div>
     </div>
