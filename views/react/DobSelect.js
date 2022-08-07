@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import './DobSelect.css'
 
+const nYearOptions = 120;
+
 export function DobSelect(props){
   const daySelect = useRef();
 
@@ -52,27 +54,34 @@ export function DobSelect(props){
     e.target.parentElement.children[1].style.color = 'rgb(72,72,72)';
   }
   
-  const monthOptions = (
-    <React.Fragment>
-      <option value=""></option>
-      <option value="1">January</option>
-      <option value="2">February</option>
-      <option value="3">March</option>
-      <option value="4">April</option>
-      <option value="5">May</option>
-      <option value="6">June</option>
-      <option value="7">July</option>
-      <option value="8">August</option>
-      <option value="9">September</option>
-      <option value="10">October</option>
-      <option value="11">November</option>
-      <option value="12">December</option>
-    </React.Fragment>
-  );
+  function getMonthOptions(){
+    return (
+      <React.Fragment>
+        <option value=""></option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </React.Fragment>
+    );
+  }
 
-  const year = (new Date()).getFullYear();
-  const nYears = 120;
-  const yearOptions = [...Array(nYears)].map((e,i) => <option value={year - i}>{year - i}</option>);
+  function getYearOptions(){
+    let year = (new Date()).getFullYear();
+    return [<option key="0" value=""/>, ...[...Array(nYearOptions)].map(() => {
+      let option = <option key={year} value={year}>{year}</option>;
+      year--;
+      return option;
+    })];
+  }
 
   return (
     <div className="dob-select-wrapper">
@@ -82,7 +91,7 @@ export function DobSelect(props){
           value={props.dobMonth || ""}
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
-          onChange={props.onChange}>{monthOptions}</select>
+          onChange={props.onChange}>{getMonthOptions()}</select>
         <label>Month</label>
       </div>
       <div>
@@ -102,8 +111,7 @@ export function DobSelect(props){
           onFocus={onFocusSelect} 
           onBlur={onBlurSelect}
           onChange={props.onChange}>
-            <option value=""></option>
-            {yearOptions}
+            {getYearOptions()}
         </select>
         <label>Year</label>
       </div>
