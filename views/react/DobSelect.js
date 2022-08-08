@@ -3,9 +3,8 @@ import './DobSelect.css'
 
 export function DobSelect(props){
   const daySelect = useRef();
-  const [nMonths] = useState(12);
   const [nDays, setNDays] = useState(31);
-  const [nYears] = useState(120);
+  const nYears = 120;
 
   function getNumberOfDaysInMonth(year, month){
     if(!month)
@@ -48,7 +47,7 @@ export function DobSelect(props){
         <option value="12">December</option>
       </React.Fragment>
     );
-  }, [nMonths]);
+  }, []);
 
   const dayOptions = useMemo(() => {
     let day = 1;
@@ -66,7 +65,7 @@ export function DobSelect(props){
       year--;
       return option;
     })];
-  }, [nYears]);
+  }, []);
 
   function onFocusSelect(e){
     e.target.style.outline = '2px solid rgb(29,155,240)';
