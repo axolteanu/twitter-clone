@@ -5,6 +5,7 @@ export function withValidation(WrappedForm){
 
     const formRef = useRef();
     const validateFuncsRef = useRef({});
+    const submitFuncRef = useRef({});
     const [values, setValues] = useState({});
     const [errors, setErrors] = useState({});
 
@@ -18,7 +19,7 @@ export function withValidation(WrappedForm){
     function onSubmit(e){
       e.preventDefault();
       if(validate())
-        formRef.current.submit();
+        submitFuncRef.current != undefined ? submitFuncRef.current() : formRef.current.submit();
       else
         return false;
     }
@@ -43,7 +44,8 @@ export function withValidation(WrappedForm){
         formRef={formRef}
         values={values}
         errors={errors}
-        validateFuncsRef={validateFuncsRef} 
+        validateFuncsRef={validateFuncsRef}
+        submitFuncRef={submitFuncRef}
         onChange={onChange} 
         onSubmit={onSubmit}/>
     );
