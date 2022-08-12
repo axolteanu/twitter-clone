@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ModalForm } from './ModalForm';
 import { TextInput } from './TextInput';
 import { DobSelect } from './DobSelect';
@@ -12,6 +12,9 @@ export function SignupForm(props){
   props.validateFuncsRef.current.dobMonth = validateDobMonth;
   props.validateFuncsRef.current.dobDay = validateDobDay;
   props.validateFuncsRef.current.dobYear = validateDobYear;
+  props.submitFuncRef.current = submit;
+  
+  const [signupError, setSignupError] = useState();
 
   function validateName(addError, name){
     if(!name)
@@ -51,6 +54,27 @@ export function SignupForm(props){
   function validateDobYear(addError, dobYear){
     if(!dobYear)
       addError('Year field cannot be empty.');
+  }
+
+  function submit(){
+    const data = new URLSearchParams();
+    for (const pair of new FormData(props.formRef.current)) {
+        data.append(pair[0], pair[1]);
+    }
+    fetch('signup', {
+      method: 'POST',
+      body: data
+    })
+    .then(response => {
+      return response.json()
+    })
+    .then(data => {
+      if(data.error)
+        setSignupError(data.error);
+      else{
+        window.location.href = "/home";
+      }
+    });
   }
 
   function concatArrays(){
@@ -94,6 +118,8 @@ export function SignupForm(props){
           <ErrorOutput source={concatArrays(props.errors.dobMonth, props.errors.dobDay, props.errors.dobYear)}/>
         </div>
       </div>
+      <br/>
+      <ErrorOutput source={signupError}/>
     </ModalForm>
   );
 }
