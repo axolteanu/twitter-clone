@@ -25,7 +25,8 @@ export function LoginForm(props){
   return(
     <ModalForm 
       formClassName="login-modal-form"
-      title="Log in to your account" 
+      title="Log in to your account"
+      action="/login"
       submitValue="Log in" 
       submitClassName="login-modal-submit"
       onSubmit={props.onSubmit}>

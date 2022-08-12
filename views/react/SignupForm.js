@@ -66,6 +66,7 @@ export function SignupForm(props){
     <ModalForm 
       formClassName="signup-modal-form"
       title="Create your account" 
+      action="/signup"
       submitValue="Sign up" 
       submitClassName="signup-modal-submit"
       onSubmit={props.onSubmit}>

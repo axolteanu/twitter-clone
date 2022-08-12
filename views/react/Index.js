@@ -28,21 +28,17 @@ function Index(){
   }
 
   function renderWithModal(main, showModal){
-    let Form = null;
-    let action;
-    if(showModal === showModalType.signup){
+    let Form;
+    if(showModal === showModalType.signup)
       Form = withValidation(SignupForm);
-      action = 'signup';
-    }else if(showModal === showModalType.login){
+    else if(showModal === showModalType.login)
       Form = withValidation(LoginForm);
-      action = 'login';
-    }
     
     return (
       <React.Fragment>
         {main}
         <Modal handleExitClick={handleExitModalClick}>
-          <Form action={action}/>
+          <Form actionOnSuccess="/home"/>
         </Modal>
       </React.Fragment>
     );

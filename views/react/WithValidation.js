@@ -27,7 +27,8 @@ export function withValidation(WrappedForm){
       for (const pair of new FormData(form)) {
           data.append(pair[0], pair[1]);
       }
-      fetch(props.action, {
+      console.log(form.action);
+      fetch(form.action, {
         method: 'POST',
         body: data
       })
@@ -38,7 +39,7 @@ export function withValidation(WrappedForm){
         if(data.error)
           setResponseError(data.error);
         else{
-          window.location.href = "/home";
+          window.location.href = props.actionOnSuccess;
         }
       });
     }
