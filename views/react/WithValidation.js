@@ -1,13 +1,11 @@
 import React, { useRef, useState } from 'react';
 
 export function withValidation(WrappedForm){
-  return function FormWithValidation(){
-
-    const formRef = useRef();
+  return function FormWithValidation(props){
     const validateFuncsRef = useRef({});
-    const submitFuncRef = useRef({});
     const [values, setValues] = useState({});
     const [errors, setErrors] = useState({});
+    const [responseError, setResponseError] = useState();
 
     function onChange(e){
       setValues(prevValues => ({
@@ -19,9 +17,30 @@ export function withValidation(WrappedForm){
     function onSubmit(e){
       e.preventDefault();
       if(validate())
-        submitFuncRef.current != undefined ? submitFuncRef.current() : formRef.current.submit();
+        submit(e.target);
       else
         return false;
+    }
+
+    function submit(form){
+      const data = new URLSearchParams();
+      for (const pair of new FormData(form)) {
+          data.append(pair[0], pair[1]);
+      }
+      fetch(props.action, {
+        method: 'POST',
+        body: data
+      })
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        if(data.error)
+          setResponseError(data.error);
+        else{
+          window.location.href = "/home";
+        }
+      });
     }
 
     function validate(){
@@ -39,13 +58,13 @@ export function withValidation(WrappedForm){
       setErrors(objErrors);
       return isValid;
     }
+    
     return(
       <WrappedForm 
-        formRef={formRef}
         values={values}
         errors={errors}
+        responseError={responseError}
         validateFuncsRef={validateFuncsRef}
-        submitFuncRef={submitFuncRef}
         onChange={onChange} 
         onSubmit={onSubmit}/>
     );
