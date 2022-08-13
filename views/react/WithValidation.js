@@ -27,7 +27,6 @@ export function withValidation(WrappedForm){
       for (const pair of new FormData(form)) {
           data.append(pair[0], pair[1]);
       }
-      console.log(form.action);
       fetch(form.action, {
         method: 'POST',
         body: data

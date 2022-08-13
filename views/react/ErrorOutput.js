@@ -6,7 +6,7 @@ export function ErrorOutput(props){
 
   if(props.source != undefined){
     if(typeof props.source === 'object'){
-      const errors = props.source;
+      const errors = [...props.source];
       if(errors != undefined && errors.length > 0){
         output += errors.shift();
         while(errors.length > 0)
