@@ -33,7 +33,7 @@ export function SignupForm(props){
     else{
       if(email.length > 50)
         addError('Email field cannot be longer than 50 characters.', email);
-      if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+      else if(!/^((?=(\w+))\2\.?)*@((?=(\w+))\4\.?)+\.\w{2,}$/.test(email))
         addError('Email format is not valid.')
     }
   }
