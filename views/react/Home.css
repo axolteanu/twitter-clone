@@ -1,0 +1,64 @@
+#main{
+  margin: auto;
+  width: 700px;
+  border-width: 0 1px 1px 1px;
+  border-style: solid;
+  border-color: lightgray;
+  padding: 10px 15px 0 15px;
+}
+
+#main > div:nth-child(1){
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+#tweet-form{
+  margin-bottom: 15px;
+}
+
+#ta-div{
+  position: relative;
+  font-size: 16px;
+}
+
+#ta{
+  font-family: inherit;
+  font-size: inherit;
+  overflow-y: hidden;
+  border: none;
+  resize: none;
+  width: 100%;
+}
+
+#ta:focus{
+  outline: none;
+}
+
+#ta-sib{
+  position: absolute;
+  color: transparent;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  user-select: none;
+  z-index: -1;
+}
+
+#submit-div{
+  display: flex;
+  justify-content: flex-end;
+}
+
+#submit-div > input{
+  width: 75px;
+  padding: 10px;
+  background-color: rgb(29,155,240);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
