@@ -8,21 +8,25 @@ function Home(props){
   const tweetTextArea = useRef();
   const tweetTextDiv = useRef();
   const [tweet, setTweet] = useState('');
+  const [tweetTxtDivVal, setTweetTextDivVal] = useState('');
+  const initialTextAreaHeight = useRef();
 
   useEffect(() => {
-    if(tweet)
-      tweetTextDiv.current.style.height = 'initial';
-    else
-      tweetTextDiv.current.style.height = tweetTextArea.current.clientHeight + 'px';
-    
-    let txtDivVal = tweet; 
+    if(!initialTextAreaHeight)
+      initialTextAreaHeight = tweetTextArea.current.clientHeight;
+    let newTweetTxtDivVal = tweet; 
     if(tweet[tweet.length - 1] === '\n')
-      txtDivVal += '\n';
-    tweetTextDiv.current.innerHTML = txtDivVal;
+      newTweetTxtDivVal += '\n';
+    setTweetTextDivVal(newTweetTxtDivVal);
+    
+  }, [tweet]);
 
-    if(tweetTextDiv.current.innerHTML)
-    tweetTextArea.current.style.height = tweetTextDiv.current.clientHeight + 'px';
-  });
+  useEffect(() => {
+    if(tweetTxtDivVal)
+      tweetTextArea.current.style.height = tweetTextDiv.current.clientHeight + 'px';
+    else
+      tweetTextArea.current.style.height = 19 + 'px';
+  }, [tweetTxtDivVal]);
 
   function onChange(e){
     setTweet(e.target.value);
@@ -34,7 +38,7 @@ function Home(props){
       <form ref={tweetForm} className="tweet-form">
         <div className="ta-div">
           <textarea ref={tweetTextArea} className="ta" placeholder="What's happening?" rows="1" value={tweet} onChange={onChange}/>
-          <div ref={tweetTextDiv} className="ta-sib"></div>
+          <div ref={tweetTextDiv} className="ta-sib">{tweetTxtDivVal}</div>
         </div>
         <div className="submit-div">
           <input type="submit" value="Tweet"/>
