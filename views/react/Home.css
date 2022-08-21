@@ -1,6 +1,6 @@
 #main{
   margin: auto;
-  width: 700px;
+  width: 600px;
   border-width: 0 1px 1px 1px;
   border-style: solid;
   border-color: lightgray;
@@ -13,16 +13,16 @@
   margin-bottom: 25px;
 }
 
-#tweet-form{
+.tweet-form{
   margin-bottom: 15px;
 }
 
-#ta-div{
+.ta-div{
   position: relative;
   font-size: 16px;
 }
 
-#ta{
+.ta{
   font-family: inherit;
   font-size: inherit;
   overflow-y: hidden;
@@ -31,11 +31,11 @@
   width: 100%;
 }
 
-#ta:focus{
+.ta:focus{
   outline: none;
 }
 
-#ta-sib{
+.ta-sib{
   position: absolute;
   color: transparent;
   overflow-wrap: anywhere;
@@ -44,12 +44,13 @@
   z-index: -1;
 }
 
-#submit-div{
+.submit-div{
   display: flex;
   justify-content: flex-end;
+  margin-top: 10px;
 }
 
-#submit-div > input{
+.submit-div > input{
   width: 75px;
   padding: 10px;
   background-color: rgb(29,155,240);
