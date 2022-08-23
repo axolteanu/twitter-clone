@@ -32,16 +32,20 @@ function Home(props){
     setTweet(e.target.value);
   }
   
+  function onSubmit(e){
+    
+  }
+
   return (
     <div id="main">
       <div>Home</div>
-      <form ref={tweetForm} className="tweet-form">
+      <form ref={tweetForm} className="tweet-form" onSubmit={onSubmit}>
         <div className="ta-div">
           <textarea ref={tweetTextArea} className="ta" placeholder="What's happening?" rows="1" value={tweet} onChange={onChange}/>
           <div ref={tweetTextDiv} className="ta-sib">{tweetTxtDivVal}</div>
         </div>
         <div className="submit-div">
-          <input type="submit" value="Tweet"/>
+          <input type="submit" value="Tweet" disabled={tweet ? false : true}/>
         </div>
       </form>
       {/*}

@@ -63,3 +63,7 @@
   cursor: pointer;
 }
 
+.submit-div > input:disabled{
+  background-color: rgb(142,205,247);
+}
+
