@@ -12,8 +12,9 @@ function Home(props){
   const initialTextAreaHeight = useRef();
 
   useEffect(() => {
-    if(!initialTextAreaHeight)
-      initialTextAreaHeight = tweetTextArea.current.clientHeight;
+    if(!initialTextAreaHeight.current){
+      initialTextAreaHeight.current = tweetTextArea.current.clientHeight;
+    }
     let newTweetTxtDivVal = tweet; 
     if(tweet[tweet.length - 1] === '\n')
       newTweetTxtDivVal += '\n';
@@ -25,7 +26,7 @@ function Home(props){
     if(tweetTxtDivVal)
       tweetTextArea.current.style.height = tweetTextDiv.current.clientHeight + 'px';
     else
-      tweetTextArea.current.style.height = 19 + 'px';
+      tweetTextArea.current.style.height = initialTextAreaHeight.current + 'px';
   }, [tweetTxtDivVal]);
 
   function onChange(e){
