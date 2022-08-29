@@ -6,6 +6,7 @@ const config = require("../config/config");
 const security = require("./security");
 const index = require("../routes/index");
 const home = require("../routes/home")
+const tweet = require("../routes/tweet");
 const signup = require("../routes/signup");
 const login = require("../routes/login");
 const logout = require("../routes/logout");
@@ -22,6 +23,7 @@ handler.get('/', index.handle);
 handler.post('/signup', signup.handle);
 handler.post('/login', login.handle);
 handler.get('/home', authenticate, home.handle);
+handler.post('/tweet', authenticate, tweet.handle)
 handler.post('/logout', authenticate, logout.handle);
 
 async function authenticate(req, res, next){

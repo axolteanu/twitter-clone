@@ -27,6 +27,7 @@
   font-size: inherit;
   overflow-y: hidden;
   border: none;
+  padding: 0;
   resize: none;
   width: 100%;
 }
