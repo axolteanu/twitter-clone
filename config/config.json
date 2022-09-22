@@ -2,7 +2,7 @@
   "dbConInfo": {
     "host": "localhost",
     "user": "root",
-    "password": "admin",
+    "password": "r00t",
     "database": "twitterclonedb"
   },
   "port": 3000,
