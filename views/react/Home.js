@@ -46,19 +46,30 @@ function Home(props){
     // TODO; refresh tweets
   }
 
+  function onClickLogout(e){
+    e.preventDefault();
+    fetch('/logout', {
+      method: 'POST'
+    })
+    .then(window.location.href = '/');
+  }
+
   return (
-    <div id="main">
-      <div>Home</div>
-      <form ref={tweetForm} className="tweet-form" action="/tweet" onSubmit={onSubmit}>
-        <div className="ta-div">
-          <textarea ref={tweetTextArea} className="ta" placeholder="What's happening?" rows="1" value={tweet} onChange={onChange}/>
-          <div ref={tweetTextDiv} className="ta-sib">{tweetTxtDivVal}</div>
-        </div>
-        <div className="submit-div">
-          <input type="submit" value="Tweet" disabled={tweet ? false : true}/>
-        </div>
-      </form>
-    </div>
+    <React.Fragment>
+      <div id="main">
+        <div>Home</div>
+        <form ref={tweetForm} className="tweet-form" action="/tweet" onSubmit={onSubmit}>
+          <div className="ta-div">
+            <textarea ref={tweetTextArea} className="ta" placeholder="What's happening?" rows="1" value={tweet} onChange={onChange}/>
+            <div ref={tweetTextDiv} className="ta-sib">{tweetTxtDivVal}</div>
+          </div>
+          <div className="submit-div">
+            <input type="submit" value="Tweet" disabled={tweet ? false : true}/>
+          </div>
+        </form>
+      </div>
+      <button onClick={onClickLogout}>Logout</button>
+    </React.Fragment>
   );
 }
 
