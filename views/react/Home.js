@@ -51,7 +51,10 @@ function Home(props){
     fetch('/logout', {
       method: 'POST'
     })
-    .then(window.location.href = '/');
+    .then(res => {
+      if(res.redirected)
+        window.location.href = res.url;
+    });
   }
 
   return (
