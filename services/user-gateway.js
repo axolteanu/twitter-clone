@@ -4,10 +4,7 @@ const db = require('../services/db');
 async function getPasswordData(email){
   let sql = `select passHash, passSalt from users where email = '${email}'`;
   let res = await util.promisify(db.connection.query.bind(db.connection))(sql);
-  if(res.length > 0)
-    return res[0];
-  else
-    return null;
+  return res.length > 0 ? res[0] : null;
 }
 
 async function userWithEmailExists(email){
@@ -30,10 +27,7 @@ async function saveUser(name, hash, salt, email, dob){
 async function getUserId(email){
   let sql = `select id from users where email = '${email}'`;
   let res = await util.promisify(db.connection.query.bind(db.connection))(sql);
-  if(res.length > 0)
-    return res[0].id;
-  else
-    return null;
+  return res.length > 0 ? res[0].id : null;
 }
 
 module.exports = {

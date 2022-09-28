@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import React, { useEffect, useRef, useState } from 'react';
 import './Home.css';
+import { Tweet } from './Tweet';
 
 function Home(props){
   
@@ -8,6 +9,7 @@ function Home(props){
   const tweetTextArea = useRef();
   const tweetTextDiv = useRef();
   const [tweet, setTweet] = useState('');
+  const [tweetList, setTweetList] = useState([]);
   const [tweetTxtDivVal, setTweetTextDivVal] = useState('');
   const initialTextAreaHeight = useRef();
 
@@ -29,6 +31,20 @@ function Home(props){
       tweetTextArea.current.style.height = initialTextAreaHeight.current + 'px';
   }, [tweetTxtDivVal]);
 
+  useEffect(() => {
+    updateTweetList();
+    const interval = window.setInterval(updateTweetList, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  function updateTweetList(){
+    fetch('/tweets', {
+      method: 'GET'
+    })
+    .then(response => {return response.json()})
+    .then(data => setTweetList(data));
+  }
+
   function onChange(e){
     setTweet(e.target.value);
   }
@@ -43,7 +59,6 @@ function Home(props){
       body: data
     })
     .then(setTweet(''));
-    // TODO; refresh tweets
   }
 
   function onClickLogout(e){
@@ -70,6 +85,15 @@ function Home(props){
             <input type="submit" value="Tweet" disabled={tweet ? false : true}/>
           </div>
         </form>
+        <div id="tweet-list">
+          {tweetList.map((t, i) => 
+          <Tweet 
+            key={i} 
+            content={t.content} 
+            authorName={t.authorName} 
+            postTime={t.postTime}/>)}
+          
+        </div>
       </div>
       <button onClick={onClickLogout}>Logout</button>
     </React.Fragment>

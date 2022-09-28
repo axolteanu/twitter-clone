@@ -23,7 +23,8 @@ handler.get('/', index.handle);
 handler.post('/signup', signup.handle);
 handler.post('/login', login.handle);
 handler.get('/home', authenticate, home.handle);
-handler.post('/tweet', authenticate, tweet.handle)
+handler.post('/tweet', authenticate, tweet.handlePost)
+handler.get('/tweets', authenticate, tweet.handleGet);
 handler.post('/logout', authenticate, logout.handle);
 
 async function authenticate(req, res, next){
