@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const config = require("../config/config")
+const userGateway = require('./user-gateway')
 
 function createPasswordHash(password){
   let salt = crypto.randomBytes(32).toString('hex');
@@ -15,7 +16,9 @@ function verifyPassword(password, userHash, userSalt){
   return hash === userHash;
 }
 
-function createAuthToken(payload){
+async function createAuthToken(email){
+  let name = await userGateway.getUserName(email);
+  let payload = {userEmail: email, userName: name};
   let privateKey = fs.readFileSync(config.jwt.privateKeyPath);
   let token = jwt.sign(
     payload,

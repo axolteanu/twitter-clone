@@ -30,9 +30,16 @@ async function getUserId(email){
   return res.length > 0 ? res[0].id : null;
 }
 
+async function getUserName(email){
+  let sql = `select name from users where email = '${email}'`;
+  let res = await util.promisify(db.connection.query.bind(db.connection))(sql);
+  return res.length > 0 ? res[0].name : null;
+}
+
 module.exports = {
   getPasswordData,
   userWithEmailExists,
   saveUser,
-  getUserId
+  getUserId,
+  getUserName
 }

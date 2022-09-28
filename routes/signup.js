@@ -16,7 +16,7 @@ module.exports.handle = async function(req, res, next){
       let hash = security.createPasswordHash(params.get('password'));
       let dob = `${params.get('dobYear')}-${params.get('dobMonth')}-${params.get('dobDay')}`;
       await userGateway.saveUser(params.get('name'), hash.hash, hash.salt, email, dob);
-      let authToken = security.createAuthToken({userEmail: params.get('email')});
+      let authToken = await security.createAuthToken(params.get('email'));
       res.setHeader('Set-Cookie', `authToken=${authToken}; Max-Age=864000; Secure; HttpOnly`);
     }else
       throw new SignupError('Signup failed: email is already registered.');

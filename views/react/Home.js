@@ -12,6 +12,7 @@ function Home(props){
   const [tweetList, setTweetList] = useState([]);
   const [tweetTxtDivVal, setTweetTextDivVal] = useState('');
   const initialTextAreaHeight = useRef();
+  const userMenu = useRef();
 
   useEffect(() => {
     if(!tweet)
@@ -32,10 +33,23 @@ function Home(props){
   }, [tweetTxtDivVal]);
 
   useEffect(() => {
-    //updateTweetList();
+    addScrollEvent();
+    positionUserMenu();
     const interval = window.setInterval(updateTweetList, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  function positionUserMenu(){
+    let elem = userMenu.current;
+    elem.style.top = (document.documentElement.clientHeight + document.documentElement.scrollTop - elem.offsetHeight) + 'px';
+    elem.style.left = (0 - elem.offsetWidth) + 'px';
+  }
+
+  function addScrollEvent(){
+    document.addEventListener('scroll', () => {
+      positionUserMenu();
+    })
+  }
 
   function updateTweetList(){
     fetch('/tweets', {
@@ -92,10 +106,15 @@ function Home(props){
             content={t.content} 
             authorName={t.authorName} 
             postTime={t.postTime}/>)}
-          
+        </div>
+        <div ref={userMenu} className="user-menu">
+          <div>
+            <div><strong>{authData.userName}</strong></div>
+            <div>{authData.userEmail}</div>
+          </div>
+          <button  onClick={onClickLogout}>Logout</button>
         </div>
       </div>
-      <button onClick={onClickLogout}>Logout</button>
     </React.Fragment>
   );
 }
