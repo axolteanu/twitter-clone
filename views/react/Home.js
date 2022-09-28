@@ -14,14 +14,14 @@ function Home(props){
   const initialTextAreaHeight = useRef();
 
   useEffect(() => {
-    if(!initialTextAreaHeight.current){
+    if(!tweet)
+      updateTweetList();
+    if(!initialTextAreaHeight.current)
       initialTextAreaHeight.current = tweetTextArea.current.clientHeight;
-    }
     let newTweetTxtDivVal = tweet; 
     if(tweet[tweet.length - 1] === '\n')
       newTweetTxtDivVal += '\n';
     setTweetTextDivVal(newTweetTxtDivVal);
-    
   }, [tweet]);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function Home(props){
   }, [tweetTxtDivVal]);
 
   useEffect(() => {
-    updateTweetList();
+    //updateTweetList();
     const interval = window.setInterval(updateTweetList, 3000);
     return () => clearInterval(interval);
   }, []);
