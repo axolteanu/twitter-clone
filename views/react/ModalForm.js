@@ -12,7 +12,7 @@ export function ModalForm(props){
         </div>
       </form>
       <div className="modal-submit-div">
-        <input className={`modal-submit ${props.submitClassName}`} form="modal-form" type="submit" value="Log in"/>
+        <input className={`modal-submit ${props.submitClassName}`} form="modal-form" type="submit" value={props.submitValue}/>
       </div>
     </div>
   );

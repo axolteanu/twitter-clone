@@ -14,7 +14,7 @@ async function saveTweet(content, userId){
 async function getTweets(){
   let sql = `select t.content content, u.name authorName, t.createTime postTime from tweets t join users u where t.userId = u.id order by t.createTime desc`;
   let res = await util.promisify(db.connection.query.bind(db.connection))(sql);
-  return res.length > 0 ? res : null;
+  return res;
 }
 
 module.exports = {
