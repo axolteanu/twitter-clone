@@ -8,8 +8,7 @@ const db = {
 
 async function connect(conInfo){
   try{
-    db.connection = mysql.createConnection(conInfo);
-    await util.promisify(db.connection.connect.bind(db.connection))();
+    db.connection = mysql.createPool(conInfo);
   }catch(e){
     console.log(e); 
     return Promise.reject("Failed to connect to database.");
